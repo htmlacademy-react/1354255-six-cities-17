@@ -1,14 +1,10 @@
 import MainPage from '@/pages/main-page/main-page';
 
-import { PlaceCard } from '@/types/place-card';
+import { PLACES } from '@/utils/mocks';
 
-type AppProps = Readonly<{
-  places: PlaceCard[];
-}>
-
-function App({ places }: AppProps): JSX.Element {
+function App(): JSX.Element {
   return (
-    <MainPage places={places} />
+    <MainPage places={PLACES} />
   );
 }
 

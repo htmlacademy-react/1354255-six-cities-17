@@ -1,4 +1,4 @@
-import styles from './not-found-page.module.css';
+import styles from './style.module.css';
 
 function NotFoundPage(): JSX.Element {
   return (
