@@ -1,5 +1,7 @@
 import { PlaceCard as PlaceCardType } from '@/types/place-card';
+import { AppRoute } from '@/utils/consts';
 import { capitalizeFirstLetter, convertRatingToStyle } from '@/utils/helpers';
+import { Link } from 'react-router-dom';
 
 type PlaceCardProps = Readonly<{
   place: PlaceCardType;
@@ -33,7 +35,7 @@ function PlaceCard({
         </div>}
 
       <div className={`${imageWrapperClass} place-card__image-wrapper`}>
-        <a href="#">
+        <Link to={`${AppRoute.Offer}/${name}`}>
           <img
             className="place-card__image"
             src={imageSrc}
@@ -41,7 +43,7 @@ function PlaceCard({
             height={imageHeight}
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
 
       <div className="favorites__card-info place-card__info">
@@ -67,7 +69,7 @@ function PlaceCard({
         </div>
 
         <h2 className="place-card__name">
-          <a href="#">{capitalizeFirstLetter(name)}</a>
+          <Link to={`${AppRoute.Offer}/${name}`}>{capitalizeFirstLetter(name)}</Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>

@@ -25,6 +25,7 @@ function FavoritesList({ places }: FavoritesListProps): JSX.Element {
             <li className="favorites__locations-items" key={city}>
               <div className="favorites__locations locations locations--current">
                 <div className="locations__item">
+                  {/* Клик по кнопке перенаправляет пользователя на главную страницу и устанавливает фильтр в соответствии с выбранным городом. - ? */}
                   <a className="locations__item-link" href="#">
                     <span>{city}</span>
                   </a>

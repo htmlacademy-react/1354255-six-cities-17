@@ -1,9 +1,17 @@
+import { Helmet } from 'react-helmet-async';
+
 import Header from '@/components/common/header/header';
+
+import { AuthStatus } from '@/utils/consts';
 
 function LoginPage(): JSX.Element {
   return (
     <div className="page page--gray page--login">
-      <Header isLoggedIn={false} />
+      <Helmet>
+        <title>6 cities: authorization</title>
+      </Helmet>
+
+      <Header authStatus={AuthStatus.NoAuth} />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
@@ -27,6 +35,7 @@ function LoginPage(): JSX.Element {
 
           <section className="locations locations--login locations--current">
             <div className="locations__item">
+              {/* Клик по кнопке перенаправляет пользователя на главную страницу и устанавливает фильтр в соответствии с выбранным городом. */}
               <a className="locations__item-link" href="#">
                 <span>Amsterdam</span>
               </a>

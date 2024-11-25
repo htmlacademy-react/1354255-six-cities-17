@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 const RATING_STARS = [
   {
     value: 5,
@@ -28,19 +30,25 @@ function OfferReviewsForm(): JSX.Element {
       <div className="reviews__rating-form form__rating">
         {
           RATING_STARS.map(({ value, title }) => (
-            <>
+            <Fragment key={value}>
               <input className="form__rating-input visually-hidden" name="rating" value={value} id={`${value}-stars`} type="radio" />
               <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={title}>
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
                 </svg>
               </label>
-            </>
+            </Fragment>
           ))
         }
       </div>
 
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+      <textarea
+        className="reviews__textarea form__textarea"
+        id="review"
+        name="review"
+        placeholder="Tell how was your stay, what you like and what can be improved"
+      >
+      </textarea>
 
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

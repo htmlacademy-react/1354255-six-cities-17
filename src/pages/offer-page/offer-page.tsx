@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet-async';
+
 import Header from '@/components/common/header/header';
 import OfferDescription from '~/offer/offer-description/offer-description';
 import OfferGallery from '~/offer/offer-gallery/offer-gallery';
@@ -6,10 +8,21 @@ import OfferMap from '~/offer/offer-map/offer-map';
 import OfferReviews from '~/offer/offer-near-places/offer-near-places';
 import OfferNearPlaces from '~/offer/offer-reviews/offer-reviews';
 
-function OfferPage(): JSX.Element {
+import { ValueOf } from '@/types/helpers';
+import { AuthStatus } from '@/utils/consts';
+
+type OfferPageProps = Readonly<{
+  authStatus: ValueOf<typeof AuthStatus>;
+}>
+
+function OfferPage({ authStatus }: OfferPageProps): JSX.Element {
   return (
     <div className="page">
-      <Header />
+      <Helmet>
+        <title>6 cities: offer</title>
+      </Helmet>
+
+      <Header authStatus={authStatus} />
 
       <main className="page__main page__main--offer">
         <section className="offer">
