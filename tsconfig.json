@@ -5,6 +5,10 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "types": ["vitest/globals", "@testing-library/jest-dom"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./src/components/modules/*"],
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
