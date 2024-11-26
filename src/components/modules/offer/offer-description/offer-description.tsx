@@ -1,3 +1,7 @@
+import BookmarkButton from '@/components/common/bookmark-button/bookmark-button';
+
+import { BookmarkType } from '@/utils/consts';
+
 const INSIDE_ITEMS = [
   'Wi-Fi',
   'Washing machine',
@@ -11,6 +15,12 @@ const INSIDE_ITEMS = [
   'Fridge'
 ];
 
+const BOOKMARK_STYLES = {
+  type: BookmarkType.Offer,
+  width: 31,
+  height: 33
+};
+
 function OfferDescription(): JSX.Element {
   return (
     <>
@@ -22,12 +32,8 @@ function OfferDescription(): JSX.Element {
         <h1 className="offer__name">
           Beautiful &amp; luxurious studio at great location
         </h1>
-        <button className="offer__bookmark-button button" type="button">
-          <svg className="offer__bookmark-icon" width="31" height="33">
-            <use xlinkHref="#icon-bookmark"></use>
-          </svg>
-          <span className="visually-hidden">To bookmarks</span>
-        </button>
+
+        <BookmarkButton {...BOOKMARK_STYLES} />
       </div>
 
       <div className="offer__rating rating">

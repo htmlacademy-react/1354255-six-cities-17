@@ -20,8 +20,27 @@ const AuthStatus = {
   Unknown: 'UNKNOWN',
 } as const;
 
+const BookmarkType = {
+  PlaceCard: 'place-card',
+  Offer: 'offer'
+} as const;
+
+const PlaceCardType = {
+  Cities: 'cities',
+  Favorites: 'favorites',
+  NearPlaces: 'near-places'
+} as const;
+
+const MapType = {
+  Cities: 'cities',
+  Offer: 'offer'
+} as const;
+
 export {
   AppRoute,
   AuthStatus,
-  City
+  BookmarkType,
+  City,
+  MapType,
+  PlaceCardType
 };

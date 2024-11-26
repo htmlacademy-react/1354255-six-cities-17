@@ -1,3 +1,7 @@
+import { clsx } from 'clsx';
+
+import LocationItem from '@/components/common/location-item/location-item';
+
 import { ValueOf } from '@/types/helpers';
 import { City } from '@/utils/consts';
 
@@ -12,15 +16,15 @@ function CitiesTabs({ selectedCity }: CitiesTabsProps): JSX.Element {
         <ul className="locations__list tabs__list">
           {
             Object.values(City).map((tab) => {
-              const activeClass = tab === selectedCity ? 'tabs__item--active' : '';
+              const isActive = tab === selectedCity;
 
               return (
-                <li className="locations__item" key={tab}>
-                  {/* Клик по кнопке перенаправляет устанавливает фильтр в соответствии с выбранным городом. */}
-                  <a className={`locations__item-link tabs__item ${activeClass}`} href="#">
-                    <span>{tab}</span>
-                  </a>
-                </li>
+                <LocationItem
+                  as='li'
+                  cityName={tab}
+                  linkClasses={clsx(['tabs__item', isActive && 'tabs__item--active'])}
+                  key={tab}
+                />
               );
             })
           }

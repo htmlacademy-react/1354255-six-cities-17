@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { Helmet } from 'react-helmet-async';
 
 import Footer from '@/components/common/footer/footer';
@@ -51,14 +52,14 @@ function FavoritesPage({ authStatus }: FavoritesPageProps): JSX.Element {
   const hasPlaces = !!Object.keys(PLACES);
 
   return (
-    <div className={`page ${!hasPlaces && 'page--favorites-empty'}`}>
+    <div className={clsx(['page', !hasPlaces && 'page--favorites-empty'])}>
       <Helmet>
         <title>6 cities: favorites</title>
       </Helmet>
 
       <Header authStatus={authStatus} />
 
-      <main className={`page__main page__main--favorites ${!hasPlaces && 'page__main--favorites-empty'}`}>
+      <main className={clsx(['page__main', 'page__main--favorites', !hasPlaces && 'page__main--favorites-empty'])}>
         <div className="page__favorites-container container">
           {
             hasPlaces

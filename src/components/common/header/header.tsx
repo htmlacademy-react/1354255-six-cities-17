@@ -12,9 +12,13 @@ const HEADER_LOGO_PROPS = {
 
 type HeaderProps = Readonly<{
   authStatus?: ValueOf<typeof AuthStatus>;
+  isLogin?: boolean;
 }>
 
-function Header({ authStatus = AuthStatus.Unknown }: HeaderProps): JSX.Element {
+function Header({
+  authStatus = AuthStatus.Unknown,
+  isLogin = false
+}: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -22,22 +26,23 @@ function Header({ authStatus = AuthStatus.Unknown }: HeaderProps): JSX.Element {
           <div className="header__left">
             <Logo {...HEADER_LOGO_PROPS} />
           </div>
-
-          <nav className="header__nav">
-            <ul className="header__nav-list">
-              <HeaderUser authStatus={authStatus} />
-
-              {
-                authStatus === AuthStatus.Auth &&
-                <li className="header__nav-item">
-                  {/* Клик по кнопке «Log Out» приводит к завершению сеанса работы — выходу из закрытой части приложения. */}
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              }
-            </ul>
-          </nav>
+          {
+            !isLogin &&
+            <nav className="header__nav">
+              <ul className="header__nav-list">
+                <HeaderUser authStatus={authStatus} />
+                {
+                  authStatus === AuthStatus.Auth &&
+                  <li className="header__nav-item">
+                    {/* Клик по кнопке «Log Out» приводит к завершению сеанса работы — выходу из закрытой части приложения. */}
+                    <a className="header__nav-link" href="#">
+                      <span className="header__signout">Sign out</span>
+                    </a>
+                  </li>
+                }
+              </ul>
+            </nav>
+          }
         </div>
       </div>
     </header>

@@ -15,7 +15,13 @@ function Logo({
 }: LogoProps): JSX.Element {
   return (
     <Link className={`${className}__logo-link`} to={AppRoute.Main}>
-      <img className={`${className}__logo`} src="img/logo.svg" alt="6 cities logo" width={width} height={height} />
+      <img
+        className={`${className}__logo`}
+        src="img/logo.svg"
+        alt="6 cities logo"
+        width={width}
+        height={height}
+      />
     </Link>
   );
 }
