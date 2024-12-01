@@ -11,7 +11,7 @@ function CitiesPlaces({ places }: CitiesPlacesProps): JSX.Element {
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">312 places to stay in Amsterdam</b>
+      <b className="places__found">{places.length} places to stay in Amsterdam</b>
 
       <CitiesPlacesSorting />
       <CitiesPlacesList places={places} />
