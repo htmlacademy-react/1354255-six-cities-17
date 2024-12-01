@@ -1,10 +1,10 @@
 import CitiesPlacesList from '~/cities/cities-places-list/cities-places-list';
 import CitiesPlacesSorting from '~/cities/cities-places-sorting/cities-places-sorting';
 
-import { PlaceCard } from '@/types/place-card';
+import { OfferCard } from '@/types/offer';
 
 type CitiesPlacesProps = Readonly<{
-  places: PlaceCard[];
+  places: OfferCard[];
 }>
 
 function CitiesPlaces({ places }: CitiesPlacesProps): JSX.Element {
