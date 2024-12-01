@@ -2,7 +2,7 @@ import { AuthStatus } from '@/utils/consts';
 
 class AuthApiService {
   get authStatus() {
-    return AuthStatus.Auth;
+    return AuthStatus.NoAuth;
   }
 }
 
