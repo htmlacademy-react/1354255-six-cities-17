@@ -9,7 +9,7 @@ declare module '*.module.css' {
 
 declare global {
   interface ObjectConstructor {
-      groupBy<T, K extends keyof unknown>(
+      groupBy<T, K>(
           items: T[],
           callback: (item: T) => K
       ): Record<K, T[]>;

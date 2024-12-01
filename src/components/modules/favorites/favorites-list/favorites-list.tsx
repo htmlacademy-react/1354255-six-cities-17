@@ -16,7 +16,7 @@ type FavoritesListProps = Readonly<{
 }>
 
 function FavoritesList({ places }: FavoritesListProps): JSX.Element {
-  const groupedPlaces = Object.groupBy(places, ({ city }) => (city).name);
+  const groupedPlaces = Object.groupBy<OfferCard, CityValue>(places, ({ city }) => city.name);
 
   return (
     <section className="favorites">
@@ -32,7 +32,7 @@ function FavoritesList({ places }: FavoritesListProps): JSX.Element {
 
               <div className="favorites__places">
                 {
-                  (placesByCity as OfferCard[]).map((place) => (
+                  placesByCity.map((place) => (
                     <PlaceCard
                       place={place}
                       key={place.id}
