@@ -1,10 +1,10 @@
 import PlaceCard from '@/components/common/place-card/place-card';
+import { PlaceCardType } from '@/utils/consts';
 
 import { PLACES } from '@/utils/mocks';
 
 const PLACES_CARD_STYLES = {
-  cardWrapperClass: 'near-places__card',
-  imageWrapperClass: 'near-places__image-wrapper',
+  cardType: PlaceCardType.NearPlaces,
   imageWidth: 260,
   imageHeight: 200
 };

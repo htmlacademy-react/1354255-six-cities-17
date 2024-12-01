@@ -1,10 +1,10 @@
 import PlaceCard from '@/components/common/place-card/place-card';
 
 import { PlaceCard as PlaceCardType } from '@/types/place-card';
+import { PlaceCardType as PlaceCardTypeEnum } from '@/utils/consts';
 
 const CITIES_CARD_STYLES = {
-  cardWrapperClass: 'cities__card',
-  imageWrapperClass: 'cities__image-wrapper',
+  cardType: PlaceCardTypeEnum.Cities,
   imageWidth: 260,
   imageHeight: 200
 };

@@ -1,17 +1,18 @@
+import LocationItem from '@/components/common/location-item/location-item';
 import PlaceCard from '@/components/common/place-card/place-card';
 
+import { ValueOf } from '@/types/helpers';
 import { PlaceCard as PlaceCardType } from '@/types/place-card';
-import { City } from '@/utils/consts';
+import { City, PlaceCardType as PlaceCardTypeEnum } from '@/utils/consts';
 
 const FAVORITES_CARD_STYLES = {
-  cardWrapperClass: 'favorites__card',
-  imageWrapperClass: 'favorites__image-wrapper',
+  cardType: PlaceCardTypeEnum.Favorites,
   imageWidth: 150,
   imageHeight: 110
 };
 
 type FavoritesListProps = Readonly<{
-  places: Partial<Record<keyof typeof City, PlaceCardType[]>>;
+  places: Partial<Record<ValueOf<typeof City>, PlaceCardType[]>>;
 }>
 
 function FavoritesList({ places }: FavoritesListProps): JSX.Element {
@@ -24,11 +25,7 @@ function FavoritesList({ places }: FavoritesListProps): JSX.Element {
           Object.entries(places).map(([city, placesByCity]) => (
             <li className="favorites__locations-items" key={city}>
               <div className="favorites__locations locations locations--current">
-                <div className="locations__item">
-                  <a className="locations__item-link" href="#">
-                    <span>{city}</span>
-                  </a>
-                </div>
+                <LocationItem cityName={city as ValueOf<typeof City>} />
               </div>
 
               <div className="favorites__places">

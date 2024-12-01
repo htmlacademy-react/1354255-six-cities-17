@@ -1,9 +1,18 @@
+import { Helmet } from 'react-helmet-async';
+
 import Header from '@/components/common/header/header';
+import LocationItem from '@/components/common/location-item/location-item';
+
+import { AuthStatus, City } from '@/utils/consts';
 
 function LoginPage(): JSX.Element {
   return (
     <div className="page page--gray page--login">
-      <Header isLoggedIn={false} />
+      <Helmet>
+        <title>6 cities: authorization</title>
+      </Helmet>
+
+      <Header authStatus={AuthStatus.NoAuth} isLogin />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
@@ -27,9 +36,7 @@ function LoginPage(): JSX.Element {
 
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <LocationItem cityName={City.Amsterdam} />
             </div>
           </section>
         </div>

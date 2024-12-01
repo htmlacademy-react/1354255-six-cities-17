@@ -1,35 +1,45 @@
+import Logo from '@/components/common/logo/logo';
+
+import { ValueOf } from '@/types/helpers';
+import { AuthStatus } from '@/utils/consts';
+import HeaderUser from './header-user/header-user';
+
+const HEADER_LOGO_PROPS = {
+  width: 81,
+  height: 41,
+  className: 'header'
+};
+
 type HeaderProps = Readonly<{
-  isLoggedIn?: boolean;
+  authStatus?: ValueOf<typeof AuthStatus>;
+  isLogin?: boolean;
 }>
 
-function Header({ isLoggedIn = true }: HeaderProps): JSX.Element {
+function Header({
+  authStatus = AuthStatus.Unknown,
+  isLogin = false
+}: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <a className="header__logo-link" href="/">
-              <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-            </a>
+            <Logo {...HEADER_LOGO_PROPS} />
           </div>
-
           {
-            isLoggedIn &&
+            !isLogin &&
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
+                <HeaderUser authStatus={authStatus} />
+                {
+                  authStatus === AuthStatus.Auth &&
+                  <li className="header__nav-item">
+                    {/* Клик по кнопке «Log Out» приводит к завершению сеанса работы — выходу из закрытой части приложения. */}
+                    <a className="header__nav-link" href="#">
+                      <span className="header__signout">Sign out</span>
+                    </a>
+                  </li>
+                }
               </ul>
             </nav>
           }
