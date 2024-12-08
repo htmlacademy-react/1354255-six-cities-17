@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
 
 import BookmarkButton from '@/components/common/bookmark-button/bookmark-button';
+import Rating from '@/components/common/rating/rating';
 
 import { ValueOf } from '@/types/helpers';
-import { PlaceCard as PlaceCardType } from '@/types/place-card';
-import { AppRoute, BookmarkType, PlaceCardType as PlaceCardTypeEnum } from '@/utils/consts';
-import { capitalizeFirstLetter, convertRatingToStyle } from '@/utils/helpers';
+import { OfferCard } from '@/types/offer';
+import {
+  AppRoute,
+  BookmarkType,
+  PlaceCardType,
+  RatingType
+} from '@/utils/consts';
+import { capitalizeFirstLetter } from '@/utils/helpers';
 
 const BOOKMARK_STYLES = {
   type: BookmarkType.PlaceCard,
@@ -14,8 +20,8 @@ const BOOKMARK_STYLES = {
 };
 
 type PlaceCardProps = Readonly<{
-  place: PlaceCardType;
-  cardType: ValueOf<typeof PlaceCardTypeEnum>;
+  place: OfferCard;
+  cardType: ValueOf<typeof PlaceCardType>;
   imageWidth?: number;
   imageHeight?: number;
 }>
@@ -27,29 +33,33 @@ function PlaceCard({
   imageHeight = 200
 }: PlaceCardProps): JSX.Element {
   const {
-    imageSrc,
+    previewImage,
     isPremium,
-    name,
+    isFavorite,
+    title,
     price,
     rating,
-    type
+    type,
+    id
   } = place;
 
   return (
     <article className={`${cardType}__card place-card`}>
-      {isPremium &&
+      {
+        isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div>}
+        </div>
+      }
 
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`${AppRoute.Offer}/${name}`}>
+        <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
-            src={imageSrc}
+            src={previewImage}
             width={imageWidth}
             height={imageHeight}
-            alt={name}
+            alt=''
           />
         </Link>
       </div>
@@ -61,18 +71,13 @@ function PlaceCard({
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <BookmarkButton isActive {...BOOKMARK_STYLES} />
+          <BookmarkButton isActive={isFavorite} {...BOOKMARK_STYLES} />
         </div>
 
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: convertRatingToStyle(rating) }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
+        <Rating rating={rating} type={RatingType.PlaceCard} />
 
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/${name}`}>{capitalizeFirstLetter(name)}</Link>
+          <Link to={`${AppRoute.Offer}/${id}`}>{capitalizeFirstLetter(title)}</Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>

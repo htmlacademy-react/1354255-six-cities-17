@@ -1,7 +1,7 @@
 import PlaceCard from '@/components/common/place-card/place-card';
-import { PlaceCardType } from '@/utils/consts';
+import { OfferCard } from '@/types/offer';
 
-import { PLACES } from '@/utils/mocks';
+import { PlaceCardType } from '@/utils/consts';
 
 const PLACES_CARD_STYLES = {
   cardType: PlaceCardType.NearPlaces,
@@ -9,16 +9,20 @@ const PLACES_CARD_STYLES = {
   imageHeight: 200
 };
 
-function OfferNearPlaces(): JSX.Element {
+type OfferNearPlacesProps = Readonly<{
+  places: OfferCard[];
+}>
+
+function OfferNearPlaces({ places }: OfferNearPlacesProps): JSX.Element {
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
       <div className="near-places__list places__list">
         {
-          PLACES.slice(0, 3).map((place) => (
+          places.map((place) => (
             <PlaceCard
               place={place}
-              key={place.imageSrc}
+              key={place.id}
               {...PLACES_CARD_STYLES}
             />
           ))

@@ -1,31 +1,33 @@
 import LocationItem from '@/components/common/location-item/location-item';
 import PlaceCard from '@/components/common/place-card/place-card';
+import { CityValue } from '@/types/city';
 
-import { ValueOf } from '@/types/helpers';
-import { PlaceCard as PlaceCardType } from '@/types/place-card';
-import { City, PlaceCardType as PlaceCardTypeEnum } from '@/utils/consts';
+import { OfferCard } from '@/types/offer';
+import { PlaceCardType } from '@/utils/consts';
 
 const FAVORITES_CARD_STYLES = {
-  cardType: PlaceCardTypeEnum.Favorites,
+  cardType: PlaceCardType.Favorites,
   imageWidth: 150,
   imageHeight: 110
 };
 
 type FavoritesListProps = Readonly<{
-  places: Partial<Record<ValueOf<typeof City>, PlaceCardType[]>>;
+  places: OfferCard[];
 }>
 
 function FavoritesList({ places }: FavoritesListProps): JSX.Element {
+  const groupedPlaces = Object.groupBy<OfferCard, CityValue>(places, ({ city }) => city.name);
+
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
 
       <ul className="favorites__list">
         {
-          Object.entries(places).map(([city, placesByCity]) => (
+          Object.entries(groupedPlaces).map(([city, placesByCity]) => (
             <li className="favorites__locations-items" key={city}>
               <div className="favorites__locations locations locations--current">
-                <LocationItem cityName={city as ValueOf<typeof City>} />
+                <LocationItem cityName={city as CityValue} />
               </div>
 
               <div className="favorites__places">
@@ -33,7 +35,7 @@ function FavoritesList({ places }: FavoritesListProps): JSX.Element {
                   placesByCity.map((place) => (
                     <PlaceCard
                       place={place}
-                      key={place.name}
+                      key={place.id}
                       {...FAVORITES_CARD_STYLES}
                     />
                   ))

@@ -11,7 +11,8 @@ const AppRoute = {
   Main: '/',
   Login: '/login',
   Favorites: '/favorites',
-  Offer: '/offer'
+  Offer: '/offer',
+  NotFound: '*',
 } as const;
 
 const AuthStatus = {
@@ -36,11 +37,27 @@ const MapType = {
   Offer: 'offer'
 } as const;
 
+const RatingType = {
+  PlaceCard: 'place-card',
+  Reviews: 'reviews',
+  Offer: 'offer'
+} as const;
+
+const ApiEndpoint = {
+  OFFERS: 'offers',
+  FAVORITE: 'favorite',
+  COMMENTS: 'comments',
+  LOGIN: 'login',
+  LOGOUT: 'logout'
+} as const;
+
 export {
+  ApiEndpoint,
   AppRoute,
   AuthStatus,
   BookmarkType,
   City,
   MapType,
-  PlaceCardType
+  PlaceCardType,
+  RatingType
 };

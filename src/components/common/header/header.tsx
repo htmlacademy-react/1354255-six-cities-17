@@ -1,8 +1,8 @@
+import HeaderUser from '@/components/common/header/header-user/header-user';
 import Logo from '@/components/common/logo/logo';
 
 import { ValueOf } from '@/types/helpers';
 import { AuthStatus } from '@/utils/consts';
-import HeaderUser from './header-user/header-user';
 
 const HEADER_LOGO_PROPS = {
   width: 81,

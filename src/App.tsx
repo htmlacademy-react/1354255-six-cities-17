@@ -8,40 +8,44 @@ import MainPage from '@/pages/main-page/main-page';
 import NotFoundPage from '@/pages/not-found-page/not-found-page';
 import OfferPage from '@/pages/offer-page/offer-page';
 
-import { AppRoute, AuthStatus } from '@/utils/consts';
-import { PLACES } from '@/utils/mocks';
-
-const AUTH = AuthStatus.NoAuth;
+import authApiService from '@/service/auth-api-service';
+import { AppRoute } from '@/utils/consts';
 
 function App(): JSX.Element {
+  const auth = authApiService.authStatus;
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage places={PLACES} authStatus={AUTH} />}
+            element={<MainPage authStatus={auth} />}
           />
+
           <Route
             path={AppRoute.Login}
             element={<LoginPage />}
           />
+
           <Route
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authStatus={AUTH}
+                authStatus={auth}
               >
-                <FavoritesPage authStatus={AUTH} />
+                <FavoritesPage authStatus={auth} />
               </PrivateRoute>
             }
           />
+
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage authStatus={AUTH} />}
+            element={<OfferPage authStatus={auth} />}
           />
+
           <Route
-            path="*"
+            path={AppRoute.NotFound}
             element={<NotFoundPage />}
           />
         </Routes>

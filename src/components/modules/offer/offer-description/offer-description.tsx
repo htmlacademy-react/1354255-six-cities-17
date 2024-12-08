@@ -1,19 +1,10 @@
 import BookmarkButton from '@/components/common/bookmark-button/bookmark-button';
+import OfferFeatures from '~/offer/offer-features/offer-features';
+import OfferInside from '~/offer/offer-inside/offer-inside';
 
-import { BookmarkType } from '@/utils/consts';
-
-const INSIDE_ITEMS = [
-  'Wi-Fi',
-  'Washing machine',
-  'Towels',
-  'Heating',
-  'Coffee machine',
-  'Baby seat',
-  'Kitchen',
-  'Dishwasher',
-  'Cable TV',
-  'Fridge'
-];
+import Rating from '@/components/common/rating/rating';
+import { OfferFull } from '@/types/offer';
+import { BookmarkType, RatingType } from '@/utils/consts';
 
 const BOOKMARK_STYLES = {
   type: BookmarkType.Offer,
@@ -21,58 +12,49 @@ const BOOKMARK_STYLES = {
   height: 33
 };
 
-function OfferDescription(): JSX.Element {
+type OfferDescriptionProps = Readonly<{
+  offer: Omit<OfferFull, 'id' | 'city' | 'location' | 'description' | 'images' | 'host'>;
+}>
+
+function OfferDescription({ offer }: OfferDescriptionProps): JSX.Element {
+  const {
+    title,
+    type,
+    price,
+    isPremium,
+    isFavorite,
+    rating,
+    goods,
+    bedrooms,
+    maxAdults,
+  } = offer;
+
   return (
     <>
-      <div className="offer__mark">
-        <span>Premium</span>
-      </div>
+      {
+        isPremium &&
+        <div className="offer__mark">
+          <span>Premium</span>
+        </div>
+      }
 
       <div className="offer__name-wrapper">
         <h1 className="offer__name">
-          Beautiful &amp; luxurious studio at great location
+          {title}
         </h1>
 
-        <BookmarkButton {...BOOKMARK_STYLES} />
+        <BookmarkButton isActive={isFavorite} {...BOOKMARK_STYLES} />
       </div>
 
-      <div className="offer__rating rating">
-        <div className="offer__stars rating__stars">
-          <span style={{ width: '80%' }}></span>
-          <span className="visually-hidden">Rating</span>
-        </div>
-        <span className="offer__rating-value rating__value">4.8</span>
-      </div>
-
-      <ul className="offer__features">
-        <li className="offer__feature offer__feature--entire">
-          Apartment
-        </li>
-        <li className="offer__feature offer__feature--bedrooms">
-          3 Bedrooms
-        </li>
-        <li className="offer__feature offer__feature--adults">
-          Max 4 adults
-        </li>
-      </ul>
+      <Rating type={RatingType.Offer} rating={rating} />
+      <OfferFeatures type={type} bedroomsCount={bedrooms} maxAdults={maxAdults} />
 
       <div className="offer__price">
-        <b className="offer__price-value">&euro;120</b>
+        <b className="offer__price-value">&euro;{price}</b>
         <span className="offer__price-text">&nbsp;night</span>
       </div>
 
-      <div className="offer__inside">
-        <h2 className="offer__inside-title">What&apos;s inside</h2>
-        <ul className="offer__inside-list">
-          {
-            INSIDE_ITEMS.map((item) => (
-              <li className="offer__inside-item" key={item}>
-                {item}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+      <OfferInside insideItems={goods} />
     </>
   );
 }

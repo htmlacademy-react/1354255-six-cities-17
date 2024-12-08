@@ -1,6 +1,6 @@
 import PlaceCard from '@/components/common/place-card/place-card';
 
-import { PlaceCard as PlaceCardType } from '@/types/place-card';
+import { OfferCard } from '@/types/offer/offer';
 import { PlaceCardType as PlaceCardTypeEnum } from '@/utils/consts';
 
 const CITIES_CARD_STYLES = {
@@ -10,7 +10,7 @@ const CITIES_CARD_STYLES = {
 };
 
 type CitiesPlacesListProp = Readonly<{
-  places: PlaceCardType[];
+  places: OfferCard[];
 }>
 
 function CitiesPlacesList({ places }: CitiesPlacesListProp): JSX.Element {
@@ -20,7 +20,7 @@ function CitiesPlacesList({ places }: CitiesPlacesListProp): JSX.Element {
         places.map((place) => (
           <PlaceCard
             place={place}
-            key={place.name}
+            key={place.id}
             {...CITIES_CARD_STYLES}
           />
         ))

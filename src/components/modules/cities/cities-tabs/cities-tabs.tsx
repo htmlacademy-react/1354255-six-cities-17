@@ -2,11 +2,11 @@ import { clsx } from 'clsx';
 
 import LocationItem from '@/components/common/location-item/location-item';
 
-import { ValueOf } from '@/types/helpers';
+import { CityValue } from '@/types/city';
 import { City } from '@/utils/consts';
 
 type CitiesTabsProps = Readonly<{
-  selectedCity: ValueOf<typeof City>;
+  selectedCity: CityValue;
 }>
 
 function CitiesTabs({ selectedCity }: CitiesTabsProps): JSX.Element {
@@ -22,7 +22,7 @@ function CitiesTabs({ selectedCity }: CitiesTabsProps): JSX.Element {
                 <LocationItem
                   as='li'
                   cityName={tab}
-                  linkClasses={clsx(['tabs__item', isActive && 'tabs__item--active'])}
+                  linkClasses={clsx('tabs__item', isActive && 'tabs__item--active')}
                   key={tab}
                 />
               );

@@ -18,11 +18,9 @@ function LocationItem({
 }: LocationItemProps): JSX.Element {
   return (
     <Tag className="locations__item" {...rest}>
-      <a className={clsx([
-        'locations__item-link',
-        linkClasses
-      ])}
-      href="#"
+      <a
+        className={clsx('locations__item-link',linkClasses)}
+        href="#"
       >
         <span>{cityName}</span>
       </a>

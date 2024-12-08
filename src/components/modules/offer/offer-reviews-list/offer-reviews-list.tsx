@@ -1,46 +1,38 @@
-import { convertRatingToStyle, humanizeDate } from '@/utils/helpers';
+import Rating from '@/components/common/rating/rating';
+import { Review } from '@/types/review';
+import { RatingType } from '@/utils/consts';
+import { humanizeDate } from '@/utils/helpers';
 
-const REVIEWS = [
-  {
-    avatar: 'img/avatar-max.jpg',
-    name: 'Max',
-    rating: 4,
-    text: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-    date: '2019-04-24'
-  }
-];
+type OfferReviewsListProps = Readonly<{
+  reviews: Review[];
+}>
 
-function OfferReviewsList(): JSX.Element {
+function OfferReviewsList({ reviews }: OfferReviewsListProps): JSX.Element {
   return (
     <ul className="reviews__list">
       {
-        REVIEWS.map(({
-          avatar,
-          name,
+        reviews.map(({
+          comment,
+          date,
           rating,
-          text,
-          date
+          user,
+          id
         }) => (
-          <li className="reviews__item" key={`${avatar}${date}`}>
+          <li className="reviews__item" key={id}>
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                <img className="reviews__avatar user__avatar" src={avatar} width="54" height="54" alt="Reviews avatar" />
+                <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
               </div>
               <span className="reviews__user-name">
-                {name}
+                {user.name}
               </span>
             </div>
 
             <div className="reviews__info">
-              <div className="reviews__rating rating">
-                <div className="reviews__stars rating__stars">
-                  <span style={{ width: convertRatingToStyle(rating) }}></span>
-                  <span className="visually-hidden">Rating</span>
-                </div>
-              </div>
+              <Rating type={RatingType.Reviews} rating={rating} />
 
               <p className="reviews__text">
-                {text}
+                {comment}
               </p>
               <time className="reviews__time" dateTime={date}>{humanizeDate(date)}</time>
             </div>
