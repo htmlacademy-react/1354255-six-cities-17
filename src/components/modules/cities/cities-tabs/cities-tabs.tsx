@@ -22,7 +22,7 @@ function CitiesTabs({ selectedCity }: CitiesTabsProps): JSX.Element {
                 <LocationItem
                   as='li'
                   cityName={tab}
-                  linkClasses={clsx(['tabs__item', isActive && 'tabs__item--active'])}
+                  linkClasses={clsx('tabs__item', isActive && 'tabs__item--active')}
                   key={tab}
                 />
               );

@@ -18,11 +18,11 @@ function BookmarkButton({
 }: BookmarkButtonProps): JSX.Element {
   return (
     <button className={
-      clsx([
+      clsx(
         'button',
         `${type}__bookmark-button`,
         isActive && `${type}__bookmark-button--active`
-      ])
+      )
     }
     type="button"
     >

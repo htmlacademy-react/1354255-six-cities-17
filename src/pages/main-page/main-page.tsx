@@ -20,12 +20,12 @@ function MainPage({ authStatus }: MainPageProps): JSX.Element {
   const hasPlaces = !!places.length;
 
   return (
-    <div className={clsx([
+    <div className={clsx(
       'page',
       'page--gray',
       'page--main',
       !hasPlaces && 'page__main--index-empty'
-    ])}
+    )}
     >
       <Helmet>
         <title>6 cities</title>
@@ -38,11 +38,11 @@ function MainPage({ authStatus }: MainPageProps): JSX.Element {
         <CitiesTabs selectedCity={City.Paris} />
 
         <div className="cities">
-          <div className={clsx([
+          <div className={clsx(
             'cities__places-container',
             'container',
             !hasPlaces && 'cities__places-container--empty'
-          ])}
+          )}
           >
             {
               hasPlaces
