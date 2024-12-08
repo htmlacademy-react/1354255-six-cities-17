@@ -1,5 +1,5 @@
 import commentsApiService from '@/service/comments-api-service';
-import { Fragment, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, Fragment, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const RATING_STARS = [
@@ -29,35 +29,29 @@ function OfferReviewsForm(): JSX.Element {
   const { id } = useParams();
   const [formValues, setFormValues] = useState({
     rating: 0,
-    review: ''
+    comment: ''
   });
 
-  const onRatingChange = (evt: SyntheticEvent) => {
+  const onRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
-      rating: parseInt((evt.target as HTMLInputElement).value, 10)
+      rating: parseInt(evt.target.value, 10)
     });
   };
 
-  const onTextareaChange = (evt: SyntheticEvent) => {
+  const onTextareaChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setFormValues({
       ...formValues,
-      review: (evt.target as HTMLTextAreaElement).value
+      comment: evt.target.value
     });
   };
 
   const onFormSubmit = () => {
-    if (!commentsApiService.isCommentValid({
-      comment: formValues.review,
-      rating: formValues.rating
-    })) {
+    if (!commentsApiService.isCommentValid(formValues)) {
       return;
     }
 
-    commentsApiService.sendComment(id!, {
-      comment: formValues.review,
-      rating: formValues.rating
-    });
+    commentsApiService.sendComment(id!, formValues);
   };
 
   return (
@@ -89,7 +83,7 @@ function OfferReviewsForm(): JSX.Element {
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={onTextareaChange}
       >
