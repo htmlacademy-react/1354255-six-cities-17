@@ -1,6 +1,7 @@
 import PlaceCard from '@/components/common/place-card/place-card';
-import { OfferCard } from '@/types/offer';
 
+import { ID } from '@/types/id';
+import { OfferCard } from '@/types/offer';
 import { PlaceCardType } from '@/utils/consts';
 
 const PLACES_CARD_STYLES = {
@@ -11,9 +12,15 @@ const PLACES_CARD_STYLES = {
 
 type OfferNearPlacesProps = Readonly<{
   places: OfferCard[];
+  onMouseOver?: (id: ID) => void;
+  onMouseLeave?: () => void;
 }>
 
-function OfferNearPlaces({ places }: OfferNearPlacesProps): JSX.Element {
+function OfferNearPlaces({
+  places,
+  onMouseOver,
+  onMouseLeave
+}: OfferNearPlacesProps): JSX.Element {
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
@@ -23,6 +30,8 @@ function OfferNearPlaces({ places }: OfferNearPlacesProps): JSX.Element {
             <PlaceCard
               place={place}
               key={place.id}
+              onMouseOver={onMouseOver}
+              onMouseLeave={onMouseLeave}
               {...PLACES_CARD_STYLES}
             />
           ))
