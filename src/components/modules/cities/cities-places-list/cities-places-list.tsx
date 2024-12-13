@@ -1,5 +1,6 @@
 import PlaceCard from '@/components/common/place-card/place-card';
 
+import { ID } from '@/types/id';
 import { OfferCard } from '@/types/offer/offer';
 import { PlaceCardType as PlaceCardTypeEnum } from '@/utils/consts';
 
@@ -11,9 +12,15 @@ const CITIES_CARD_STYLES = {
 
 type CitiesPlacesListProp = Readonly<{
   places: OfferCard[];
+  onMouseOver?: (id: ID) => void;
+  onMouseLeave?: () => void;
 }>
 
-function CitiesPlacesList({ places }: CitiesPlacesListProp): JSX.Element {
+function CitiesPlacesList({
+  places,
+  onMouseOver,
+  onMouseLeave
+}: CitiesPlacesListProp): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {
@@ -21,6 +28,8 @@ function CitiesPlacesList({ places }: CitiesPlacesListProp): JSX.Element {
           <PlaceCard
             place={place}
             key={place.id}
+            onMouseOver={onMouseOver}
+            onMouseLeave={onMouseLeave}
             {...CITIES_CARD_STYLES}
           />
         ))

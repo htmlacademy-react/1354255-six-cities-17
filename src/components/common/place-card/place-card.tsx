@@ -1,9 +1,11 @@
+import { clsx } from 'clsx';
 import { Link } from 'react-router-dom';
 
 import BookmarkButton from '@/components/common/bookmark-button/bookmark-button';
 import Rating from '@/components/common/rating/rating';
 
 import { ValueOf } from '@/types/helpers';
+import { ID } from '@/types/id';
 import { OfferCard } from '@/types/offer';
 import {
   AppRoute,
@@ -24,13 +26,17 @@ type PlaceCardProps = Readonly<{
   cardType: ValueOf<typeof PlaceCardType>;
   imageWidth?: number;
   imageHeight?: number;
+  onMouseOver?: (id: ID) => void;
+  onMouseLeave?: () => void;
 }>
 
 function PlaceCard({
   place,
   cardType,
   imageWidth = 260,
-  imageHeight = 200
+  imageHeight = 200,
+  onMouseOver,
+  onMouseLeave
 }: PlaceCardProps): JSX.Element {
   const {
     previewImage,
@@ -44,7 +50,11 @@ function PlaceCard({
   } = place;
 
   return (
-    <article className={`${cardType}__card place-card`}>
+    <article
+      className={clsx('place-card', `${cardType}__card`)}
+      onMouseEnter={() => onMouseOver?.(id)}
+      onMouseLeave={() => onMouseLeave?.()}
+    >
       {
         isPremium &&
         <div className="place-card__mark">

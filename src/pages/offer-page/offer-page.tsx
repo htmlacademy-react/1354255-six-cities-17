@@ -21,13 +21,14 @@ type OfferPageProps = Readonly<{
 function OfferPage({ authStatus }: OfferPageProps): JSX.Element {
   const { id } = useParams();
 
-  if (!id) {
+  const offer = offerApiService.getOfferById(id!);
+
+  if (!offer) {
     return <Navigate to={AppRoute.NotFound} />;
   }
 
-  const offer = offerApiService.getOfferById(id);
-  const reviews = commentsApiService.getCommentsById(id);
-  const nearPlaces = offerApiService.getOffersNearBy(id);
+  const reviews = commentsApiService.getCommentsById(id!);
+  const nearPlaces = offerApiService.getOffersNearBy(id!);
 
   return (
     <div className="page">
@@ -53,11 +54,15 @@ function OfferPage({ authStatus }: OfferPageProps): JSX.Element {
                 </p>
               </div>
 
-              <OfferReviews reviews={reviews}/>
+              <OfferReviews reviews={reviews} />
             </div>
           </div>
 
-          <MapSection type={MapType.Offer} />
+          <MapSection
+            type={MapType.Offer}
+            offers={nearPlaces}
+            selectedOfferId={null}
+          />
         </section>
 
         <div className="container">

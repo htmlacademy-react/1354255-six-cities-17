@@ -4,13 +4,14 @@ import {
   MOCK_OFFERS_NEARBY
 } from '@/mocks/offers';
 import { ID } from '@/types/id';
+import { OfferFull } from '@/types/offer';
 
 class OfferApiService {
   get offers() {
     return MOCK_OFFERS;
   }
 
-  getOfferById(id: ID) {
+  getOfferById(id: ID): OfferFull | undefined {
     return MOCK_OFFERS_BY_ID[id];
   }
 
