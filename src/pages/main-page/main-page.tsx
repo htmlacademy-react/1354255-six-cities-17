@@ -1,4 +1,5 @@
 import { clsx } from 'clsx';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Header from '@/components/common/header/header';
@@ -9,6 +10,7 @@ import CitiesTabs from '~/cities/cities-tabs/cities-tabs';
 
 import offerApiService from '@/service/offer-api-service';
 import { ValueOf } from '@/types/helpers';
+import { ID } from '@/types/id';
 import { AuthStatus, City, MapType } from '@/utils/consts';
 
 type MainPageProps = Readonly<{
@@ -18,6 +20,12 @@ type MainPageProps = Readonly<{
 function MainPage({ authStatus }: MainPageProps): JSX.Element {
   const places = offerApiService.offers;
   const hasPlaces = !!places.length;
+
+  const [selectedPointId, setSelectedPointId] = useState<ID | null>(null);
+
+  const handleSelectedPointState = (id?: ID) => {
+    setSelectedPointId(id ?? null);
+  };
 
   return (
     <div className={clsx(
@@ -46,12 +54,24 @@ function MainPage({ authStatus }: MainPageProps): JSX.Element {
           >
             {
               hasPlaces
-                ? <CitiesPlaces places={places} />
+                ?
+                <CitiesPlaces
+                  places={places}
+                  onMouseOver={handleSelectedPointState}
+                  onMouseLeave={handleSelectedPointState}
+                />
                 : <CitiesPlacesEmpty />
             }
 
             <div className="cities__right-section">
-              {hasPlaces && <MapSection type={MapType.Cities} />}
+              {
+                hasPlaces &&
+                <MapSection
+                  type={MapType.Cities}
+                  offers={places}
+                  selectedOfferId={selectedPointId}
+                />
+              }
             </div>
           </div>
         </div>
