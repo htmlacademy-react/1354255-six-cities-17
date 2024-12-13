@@ -1,5 +1,4 @@
 import { clsx } from 'clsx';
-import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Header from '@/components/common/header/header';
@@ -8,9 +7,9 @@ import CitiesPlacesEmpty from '~/cities/cities-places-empty/cities-places-empty'
 import CitiesPlaces from '~/cities/cities-places/cities-places';
 import CitiesTabs from '~/cities/cities-tabs/cities-tabs';
 
+import useSelectedPoint from '@/hooks/useSelectedPoint';
 import offerApiService from '@/service/offer-api-service';
 import { ValueOf } from '@/types/helpers';
-import { ID } from '@/types/id';
 import { AuthStatus, City, MapType } from '@/utils/consts';
 
 type MainPageProps = Readonly<{
@@ -21,11 +20,7 @@ function MainPage({ authStatus }: MainPageProps): JSX.Element {
   const places = offerApiService.offers;
   const hasPlaces = !!places.length;
 
-  const [selectedPointId, setSelectedPointId] = useState<ID | null>(null);
-
-  const handleSelectedPointState = (id?: ID) => {
-    setSelectedPointId(id ?? null);
-  };
+  const { selectedPointId, handleSelectedPointState } = useSelectedPoint();
 
   return (
     <div className={clsx(
