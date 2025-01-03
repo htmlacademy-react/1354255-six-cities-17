@@ -7,6 +7,8 @@ import { ID } from '@/types/id';
 import { OfferFull } from '@/types/offer';
 
 class OfferApiService {
+  readonly #NEAR_PLACES_TO_SHOW = 3;
+
   get offers() {
     return MOCK_OFFERS;
   }
@@ -16,7 +18,7 @@ class OfferApiService {
   }
 
   getOffersNearBy(id: ID) {
-    return MOCK_OFFERS_NEARBY[id];
+    return MOCK_OFFERS_NEARBY[id].slice(0, this.#NEAR_PLACES_TO_SHOW);
   }
 }
 
