@@ -26,8 +26,10 @@ const currentCustomIcon = new Icon({
 });
 
 function MapSection({ type, offers, selectedOfferId }: MapSectionProps): JSX.Element {
+  const startCity = offers[0].city;
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, offers[0].city);
+  const map = useMap(mapRef, startCity);
 
   useEffect(
     () => {

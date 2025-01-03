@@ -21,7 +21,7 @@ type OfferPageProps = Readonly<{
 
 function OfferPage({ authStatus }: OfferPageProps): JSX.Element {
   const { id } = useParams();
-  const { selectedPointId, handleSelectedPointState } = useSelectedPoint();
+  const { selectedPointId, handleSelectedPointState } = useSelectedPoint(id);
 
   const offer = offerApiService.getOfferById(id!);
 

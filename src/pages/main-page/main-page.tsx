@@ -50,24 +50,23 @@ function MainPage({ authStatus }: MainPageProps): JSX.Element {
             {
               hasPlaces
                 ?
-                <CitiesPlaces
-                  places={places}
-                  onMouseOver={handleSelectedPointState}
-                  onMouseLeave={handleSelectedPointState}
-                />
+                <>
+                  <CitiesPlaces
+                    places={places}
+                    onMouseOver={handleSelectedPointState}
+                    onMouseLeave={handleSelectedPointState}
+                  />
+
+                  <div className="cities__right-section">
+                    <MapSection
+                      type={MapType.Cities}
+                      offers={places}
+                      selectedOfferId={selectedPointId}
+                    />
+                  </div>
+                </>
                 : <CitiesPlacesEmpty />
             }
-
-            <div className="cities__right-section">
-              {
-                hasPlaces &&
-                <MapSection
-                  type={MapType.Cities}
-                  offers={places}
-                  selectedOfferId={selectedPointId}
-                />
-              }
-            </div>
           </div>
         </div>
       </main>
