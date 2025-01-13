@@ -1,4 +1,5 @@
 import { clsx } from 'clsx';
+import { MouseEvent } from 'react';
 
 import LocationItem from '@/components/common/location-item/location-item';
 import { setCurrentCity } from '@/store/actions';
@@ -12,7 +13,7 @@ function CitiesTabs(): JSX.Element {
   const dispatch = useAppDispatch();
   const selectedCity = useAppSelector((state) => state.currentCity);
 
-  const onClick = (city: CityValue) => (evt: React.MouseEvent<HTMLElement>) => {
+  const onClick = (city: CityValue) => (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
     dispatch(setCurrentCity(city));

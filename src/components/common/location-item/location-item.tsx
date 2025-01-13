@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { ElementType } from 'react';
+import { ElementType, MouseEvent } from 'react';
 
 import { ValueOf } from '@/types/helpers';
 import { City } from '@/utils/consts';
@@ -8,7 +8,7 @@ type LocationItemProps = Readonly<{
   cityName: ValueOf<typeof City>;
   linkClasses?: string;
   as?: ElementType;
-  onClick?: (evt: Event) => void;
+  onClick?: (evt: MouseEvent<HTMLElement>) => void;
 }>;
 
 function LocationItem({
@@ -24,7 +24,6 @@ function LocationItem({
         className={
           clsx('locations__item-link', linkClasses)
         }
-        href="#"
         onClick={onClick}
       >
         <span>{cityName}</span>

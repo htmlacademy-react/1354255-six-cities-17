@@ -14,7 +14,7 @@ import { useAppSelector } from '@/hooks/store/useAppSelector';
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import offerApiService from '@/service/offer-api-service';
 import { ValueOf } from '@/types/helpers';
-import { AuthStatus, City, MapType } from '@/utils/consts';
+import { AuthStatus, MapType } from '@/utils/consts';
 
 type MainPageProps = Readonly<{
   authStatus: ValueOf<typeof AuthStatus>;
@@ -51,7 +51,7 @@ function MainPage({ authStatus }: MainPageProps): JSX.Element {
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <CitiesTabs selectedCity={City.Paris} />
+        <CitiesTabs />
 
         <div className="cities">
           <div
