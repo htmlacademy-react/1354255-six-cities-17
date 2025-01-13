@@ -1,16 +1,19 @@
-import { setOfferCards, setCurrentCity } from './actions';
+import { ValueOf } from '@/types/helpers';
+import { setOfferCards, setCurrentCity, setCurrentSort } from './actions';
 import { OfferCard } from '@/types/offer';
 import { CityValue } from '@/types/city';
 import { createReducer } from '@reduxjs/toolkit';
 
-import { City } from '@/utils/consts';
+import { City, SortType } from '@/utils/consts';
 
 const initialState: {
   currentCity: CityValue;
   offerCards: OfferCard[];
+  currentSort: ValueOf<typeof SortType>;
 } = {
   currentCity: City.Paris,
   offerCards: [],
+  currentSort: SortType.POPULAR,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -20,5 +23,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setCurrentCity, (state, action) => {
       state.currentCity = action.payload;
+    })
+    .addCase(setCurrentSort, (state, action) => {
+      state.currentSort = action.payload;
     });
 });
