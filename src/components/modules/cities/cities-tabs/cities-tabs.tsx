@@ -1,15 +1,24 @@
 import { clsx } from 'clsx';
+import { MouseEvent } from 'react';
 
 import LocationItem from '@/components/common/location-item/location-item';
+import { setCurrentCity } from '@/store/actions';
 
+import { useAppDispatch } from '@/hooks/store/useAppDispatch';
+import { useAppSelector } from '@/hooks/store/useAppSelector';
 import { CityValue } from '@/types/city';
 import { City } from '@/utils/consts';
 
-type CitiesTabsProps = Readonly<{
-  selectedCity: CityValue;
-}>
+function CitiesTabs(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const selectedCity = useAppSelector((state) => state.currentCity);
 
-function CitiesTabs({ selectedCity }: CitiesTabsProps): JSX.Element {
+  const onClick = (city: CityValue) => (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+
+    dispatch(setCurrentCity(city));
+  };
+
   return (
     <div className="tabs">
       <section className="locations container">
@@ -24,6 +33,7 @@ function CitiesTabs({ selectedCity }: CitiesTabsProps): JSX.Element {
                   cityName={tab}
                   linkClasses={clsx('tabs__item', isActive && 'tabs__item--active')}
                   key={tab}
+                  onClick={onClick(tab)}
                 />
               );
             })
