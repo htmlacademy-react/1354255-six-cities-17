@@ -7,7 +7,7 @@ const City = {
   Brussels: 'Brussels',
   Amsterdam: 'Amsterdam',
   Hamburg: 'Hamburg',
-  Dusseldorf: 'Dusseldorf'
+  Dusseldorf: 'Dusseldorf',
 } as const;
 
 const AppRoute = {
@@ -26,24 +26,24 @@ const AuthStatus = {
 
 const BookmarkType = {
   PlaceCard: 'place-card',
-  Offer: 'offer'
+  Offer: 'offer',
 } as const;
 
 const PlaceCardType = {
   Cities: 'cities',
   Favorites: 'favorites',
-  NearPlaces: 'near-places'
+  NearPlaces: 'near-places',
 } as const;
 
 const MapType = {
   Cities: 'cities',
-  Offer: 'offer'
+  Offer: 'offer',
 } as const;
 
 const RatingType = {
   PlaceCard: 'place-card',
   Reviews: 'reviews',
-  Offer: 'offer'
+  Offer: 'offer',
 } as const;
 
 const ApiEndpoint = {
@@ -51,21 +51,28 @@ const ApiEndpoint = {
   FAVORITE: 'favorite',
   COMMENTS: 'comments',
   LOGIN: 'login',
-  LOGOUT: 'logout'
+  LOGOUT: 'logout',
 } as const;
 
 const Leaflet = {
-  URL_TEMPLATE: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-  OPTIONS:
-  {
+  URL_TEMPLATE:
+    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  OPTIONS: {
     attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-  }
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  },
 } as const;
 
 const UrlMarker = {
   DEFAULT: DefaultPin,
-  CURRENT: ActivePin
+  CURRENT: ActivePin,
+} as const;
+
+const SortType = {
+  POPULAR: 'Popular',
+  LOW_TO_HIGH: 'Price: low to high',
+  HIGH_TO_LOW: 'Price: high to low',
+  TOP_RATED: 'Top rated first',
 } as const;
 
 export {
@@ -78,5 +85,6 @@ export {
   MapType,
   PlaceCardType,
   RatingType,
-  UrlMarker
+  UrlMarker,
+  SortType,
 };
