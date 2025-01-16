@@ -1,8 +1,8 @@
-import { ValueOf } from '@/types/helpers';
-import { setOfferCards, setCurrentCity, setCurrentSort } from './actions';
-import { OfferCard } from '@/types/offer';
 import { CityValue } from '@/types/city';
+import { ValueOf } from '@/types/helpers';
+import { OfferCard } from '@/types/offer';
 import { createReducer } from '@reduxjs/toolkit';
+import { loadOffers, setCurrentCity, setCurrentSort } from './actions';
 
 import { City, SortType } from '@/utils/consts';
 
@@ -18,7 +18,7 @@ const initialState: {
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(setOfferCards, (state, action) => {
+    .addCase(loadOffers, (state, action) => {
       state.offerCards = action.payload;
     })
     .addCase(setCurrentCity, (state, action) => {

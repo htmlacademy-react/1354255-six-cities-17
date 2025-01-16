@@ -1,17 +1,17 @@
 import { clsx } from 'clsx';
-import { Helmet } from 'react-helmet-async';
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import Header from '@/components/common/header/header';
 import MapSection from '@/components/common/map-section/map-section';
+import { fetchOffersAction } from '@/store/api-actions';
 import CitiesPlacesEmpty from '~/cities/cities-places-empty/cities-places-empty';
 import CitiesPlaces from '~/cities/cities-places/cities-places';
 import CitiesTabs from '~/cities/cities-tabs/cities-tabs';
-import { setOfferCards } from '@/store/actions';
 
-import useSelectedPoint from '@/hooks/useSelectedPoint';
-import { useAppSelector } from '@/hooks/store/useAppSelector';
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
+import { useAppSelector } from '@/hooks/store/useAppSelector';
+import useSelectedPoint from '@/hooks/useSelectedPoint';
 import offerApiService from '@/service/offer-api-service';
 import { ValueOf } from '@/types/helpers';
 import { AuthStatus, MapType } from '@/utils/consts';
@@ -31,7 +31,7 @@ function MainPage({ authStatus }: MainPageProps): JSX.Element {
   const { selectedPointId, handleSelectedPointState } = useSelectedPoint();
 
   useEffect(() => {
-    dispatch(setOfferCards(offerApiService.getOffers()));
+    dispatch(fetchOffersAction());
   }, []);
 
   return (

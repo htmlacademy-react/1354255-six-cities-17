@@ -75,8 +75,16 @@ const SortType = {
   TOP_RATED: 'Top rated first',
 } as const;
 
+const ApiRoute = {
+  OFFERS: '/offers',
+  FAVORITE: '/favorite',
+  COMMENTS: '/comments',
+  LOGIN: '/login',
+} as const;
+
 export {
   ApiEndpoint,
+  ApiRoute,
   AppRoute,
   AuthStatus,
   BookmarkType,
@@ -85,6 +93,6 @@ export {
   MapType,
   PlaceCardType,
   RatingType,
-  UrlMarker,
   SortType,
+  UrlMarker
 };
