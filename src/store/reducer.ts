@@ -1,19 +1,30 @@
+import { createReducer } from '@reduxjs/toolkit';
+
+import {
+  loadOffers,
+  requireAuthorization,
+  setCurrentCity,
+  setCurrentSort,
+} from './actions';
+
 import { CityValue } from '@/types/city';
 import { ValueOf } from '@/types/helpers';
 import { OfferCard } from '@/types/offer';
-import { createReducer } from '@reduxjs/toolkit';
-import { loadOffers, setCurrentCity, setCurrentSort } from './actions';
-
-import { City, SortType } from '@/utils/consts';
+import { UserWithAuth } from '@/types/user';
+import { AuthStatus, City, SortType } from '@/utils/consts';
 
 const initialState: {
   currentCity: CityValue;
   offerCards: OfferCard[];
   currentSort: ValueOf<typeof SortType>;
+  authorizationStatus: ValueOf<typeof AuthStatus>;
+  user: UserWithAuth | undefined;
 } = {
   currentCity: City.Paris,
   offerCards: [],
   currentSort: SortType.POPULAR,
+  authorizationStatus: AuthStatus.Unknown,
+  user: undefined,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -26,5 +37,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setCurrentSort, (state, action) => {
       state.currentSort = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload.authStatus;
+      state.user = action.payload.userData;
     });
 });
