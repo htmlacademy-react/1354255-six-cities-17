@@ -80,6 +80,7 @@ const ApiRoute = {
   FAVORITE: '/favorite',
   COMMENTS: '/comments',
   LOGIN: '/login',
+  LOGOUT: '/logout',
 } as const;
 
 export {

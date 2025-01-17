@@ -1,5 +1,5 @@
 import { MOCK_COMMENTS } from '@/mocks/comments';
-import { CommentRequest } from '@/types/commentRequest';
+import { CommentRequest } from '@/types/comment-request';
 import { ID } from '@/types/id';
 
 class CommentsApiService {
