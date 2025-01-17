@@ -13,14 +13,9 @@ import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import { useAppSelector } from '@/hooks/store/useAppSelector';
 import useSelectedPoint from '@/hooks/useSelectedPoint';
 import offerApiService from '@/service/offer-api-service';
-import { ValueOf } from '@/types/helpers';
-import { AuthStatus, MapType } from '@/utils/consts';
+import { MapType } from '@/utils/consts';
 
-type MainPageProps = Readonly<{
-  authStatus: ValueOf<typeof AuthStatus>;
-}>;
-
-function MainPage({ authStatus }: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
   const offerCards = useAppSelector((state) => state.offerCards);
   const currentCity = useAppSelector((state) => state.currentCity);
   const dispatch = useAppDispatch();
@@ -47,7 +42,7 @@ function MainPage({ authStatus }: MainPageProps): JSX.Element {
         <title>6 cities</title>
       </Helmet>
 
-      <Header authStatus={authStatus} />
+      <Header />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

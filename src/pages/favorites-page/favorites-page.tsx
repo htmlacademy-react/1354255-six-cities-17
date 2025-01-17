@@ -7,14 +7,8 @@ import FavoritesEmpty from '~/favorites/favorites-empty/favorites-empty';
 import FavoritesList from '~/favorites/favorites-list/favorites-list';
 
 import favoriteApiService from '@/service/favorite-api-service';
-import { ValueOf } from '@/types/helpers';
-import { AuthStatus } from '@/utils/consts';
 
-type FavoritesPageProps = Readonly<{
-  authStatus: ValueOf<typeof AuthStatus>;
-}>
-
-function FavoritesPage({ authStatus }: FavoritesPageProps): JSX.Element {
+function FavoritesPage(): JSX.Element {
   const places = favoriteApiService.favorite;
   const hasPlaces = !!places.length;
 
@@ -24,7 +18,7 @@ function FavoritesPage({ authStatus }: FavoritesPageProps): JSX.Element {
         <title>6 cities: favorites</title>
       </Helmet>
 
-      <Header authStatus={authStatus} />
+      <Header />
 
       <main className={clsx(
         'page__main',

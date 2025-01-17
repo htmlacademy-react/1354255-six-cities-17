@@ -1,9 +1,9 @@
 import PlaceCard from '@/components/common/place-card/place-card';
 
+import { useAppSelector } from '@/hooks/store/useAppSelector';
 import { ID } from '@/types/id';
 import { OfferCard } from '@/types/offer/offer';
 import { PlaceCardType as PlaceCardTypeEnum } from '@/utils/consts';
-import { useAppSelector } from '@/hooks/store/useAppSelector';
 import { sortOffers } from '@/utils/helpers';
 
 const CITIES_CARD_STYLES = {
