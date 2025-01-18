@@ -2,7 +2,8 @@ import { ValueOf } from '@/types/helpers';
 import { createAction } from '@reduxjs/toolkit';
 
 import { CityValue } from '@/types/city';
-import { OfferCard } from '@/types/offer';
+import { UserComment } from '@/types/comment';
+import { OfferCard, OfferFull } from '@/types/offer';
 import { UserWithAuth } from '@/types/user';
 import { AuthStatus, SortType } from '@/utils/consts';
 
@@ -17,3 +18,9 @@ export const requireAuthorization = createAction<{
   userData: UserWithAuth | undefined;
   authStatus: ValueOf<typeof AuthStatus>;
 }>('AUTH');
+
+export const loadOffer = createAction<OfferFull>('LOAD_OFFER');
+
+export const loadNearbyOffer = createAction<OfferCard[]>('LOAD_NEARBY_OFFER');
+
+export const loadComments = createAction<UserComment[]>('LOAD_COMMENTS');

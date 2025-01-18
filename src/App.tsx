@@ -28,7 +28,7 @@ function App(): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage authStatus={authStatus} />}
+            element={<MainPage />}
           />
 
           <Route path={AppRoute.Login} element={<LoginPage />} />
@@ -37,14 +37,14 @@ function App(): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute authStatus={authStatus}>
-                <FavoritesPage authStatus={authStatus} />
+                <FavoritesPage />
               </PrivateRoute>
             }
           />
 
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage authStatus={authStatus} />}
+            element={<OfferPage />}
           />
 
           <Route path={AppRoute.NotFound} element={<NotFoundPage />} />

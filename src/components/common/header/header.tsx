@@ -1,7 +1,9 @@
 import HeaderUser from '@/components/common/header/header-user/header-user';
 import Logo from '@/components/common/logo/logo';
+import { useAppDispatch } from '@/hooks/store/useAppDispatch';
+import { useAppSelector } from '@/hooks/store/useAppSelector';
+import { logoutAction } from '@/store/api-actions';
 
-import { ValueOf } from '@/types/helpers';
 import { AuthStatus } from '@/utils/consts';
 
 const HEADER_LOGO_PROPS = {
@@ -11,14 +13,21 @@ const HEADER_LOGO_PROPS = {
 };
 
 type HeaderProps = Readonly<{
-  authStatus?: ValueOf<typeof AuthStatus>;
   isLogin?: boolean;
 }>
 
 function Header({
-  authStatus = AuthStatus.Unknown,
   isLogin = false
 }: HeaderProps): JSX.Element {
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const dispatch = useAppDispatch();
+
+  const onLogoutClick = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    evt.preventDefault();
+
+    dispatch(logoutAction());
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -35,7 +44,7 @@ function Header({
                   authStatus === AuthStatus.Auth &&
                   <li className="header__nav-item">
                     {/* Клик по кнопке «Log Out» приводит к завершению сеанса работы — выходу из закрытой части приложения. */}
-                    <a className="header__nav-link" href="#">
+                    <a className="header__nav-link" onClick={onLogoutClick}>
                       <span className="header__signout">Sign out</span>
                     </a>
                   </li>

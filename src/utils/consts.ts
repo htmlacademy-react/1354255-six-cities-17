@@ -83,6 +83,8 @@ const ApiRoute = {
   LOGOUT: '/logout',
 } as const;
 
+const NEAR_PLACES_TO_SHOW = 3;
+
 export {
   ApiEndpoint,
   ApiRoute,
@@ -92,6 +94,7 @@ export {
   City,
   Leaflet,
   MapType,
+  NEAR_PLACES_TO_SHOW,
   PlaceCardType,
   RatingType,
   SortType,

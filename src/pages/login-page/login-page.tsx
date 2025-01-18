@@ -6,7 +6,7 @@ import LocationItem from '@/components/common/location-item/location-item';
 
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import { loginAction } from '@/store/api-actions';
-import { AuthStatus, City } from '@/utils/consts';
+import { City } from '@/utils/consts';
 
 type Form = {
   login: string;
@@ -43,7 +43,7 @@ function LoginPage(): JSX.Element {
         <title>6 cities: authorization</title>
       </Helmet>
 
-      <Header authStatus={AuthStatus.NoAuth} isLogin />
+      <Header isLogin />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
