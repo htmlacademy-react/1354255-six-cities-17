@@ -1,8 +1,10 @@
+import { memo } from 'react';
+
 import BookmarkButton from '@/components/common/bookmark-button/bookmark-button';
+import Rating from '@/components/common/rating/rating';
 import OfferFeatures from '~/offer/offer-features/offer-features';
 import OfferInside from '~/offer/offer-inside/offer-inside';
 
-import Rating from '@/components/common/rating/rating';
 import { OfferFull } from '@/types/offer';
 import { BookmarkType, RatingType } from '@/utils/consts';
 
@@ -59,4 +61,4 @@ function OfferDescription({ offer }: OfferDescriptionProps): JSX.Element {
   );
 }
 
-export default OfferDescription;
+export default memo(OfferDescription);

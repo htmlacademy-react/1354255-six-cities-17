@@ -1,8 +1,14 @@
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import commentsApiService from '@/service/comments-api-service';
-import { fetchOfferComments, postOfferComments } from '@/store/api-actions';
 import { ChangeEvent, Fragment, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+import { useAppDispatch } from '@/hooks/store/useAppDispatch';
+import {
+  fetchOfferComments,
+  postOfferComments,
+} from '@/store/modules/offer/api-actions';
+
+import commentsApiService from '@/service/comments-api-service';
+import { isRequestOK } from '@/utils/helpers';
 
 const RATING_STARS = [
   {
@@ -27,29 +33,31 @@ const RATING_STARS = [
   },
 ];
 
+const MIN_CHARACTERS_IN_REVIEW = 50;
+
 function OfferReviewsForm(): JSX.Element {
   const { id } = useParams();
-  const dispatch = useAppDispatch();
   const [formValues, setFormValues] = useState({
     rating: 0,
     review: '',
   });
+  const dispatch = useAppDispatch();
 
-  const onRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
       rating: parseInt(evt.target.value, 10),
     });
   };
 
-  const onTextareaChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextareaChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setFormValues({
       ...formValues,
       review: evt.target.value,
     });
   };
 
-  const onFormSubmit = async () => {
+  const handleFormSubmit = async () => {
     if (!commentsApiService.isCommentValid(formValues) || !id) {
       return;
     }
@@ -61,7 +69,7 @@ function OfferReviewsForm(): JSX.Element {
       })
     );
 
-    if (response.meta.requestStatus === 'fulfilled') {
+    if (isRequestOK(response)) {
       dispatch(fetchOfferComments(id));
 
       setFormValues({
@@ -85,7 +93,7 @@ function OfferReviewsForm(): JSX.Element {
               value={value}
               id={`${value}-stars`}
               type="radio"
-              onChange={onRatingChange}
+              onChange={handleRatingChange}
             />
 
             <label
@@ -106,7 +114,7 @@ function OfferReviewsForm(): JSX.Element {
         id="review"
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={onTextareaChange}
+        onChange={handleTextareaChange}
       >
       </textarea>
 
@@ -114,16 +122,16 @@ function OfferReviewsForm(): JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe your stay
-          with at least <b className="reviews__text-amount">50 characters</b>.
+          with at least <b className="reviews__text-amount">{MIN_CHARACTERS_IN_REVIEW} characters</b>.
         </p>
 
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={formValues.review.length < MIN_CHARACTERS_IN_REVIEW}
           onSubmit={() => {
             void (async () => {
-              await onFormSubmit();
+              await handleFormSubmit();
             })();
           }}
         >

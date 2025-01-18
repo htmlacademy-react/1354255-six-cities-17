@@ -85,6 +85,18 @@ const ApiRoute = {
 
 const NEAR_PLACES_TO_SHOW = 3;
 
+const FeatureModule = {
+  CITIES: 'cities',
+  OFFER: 'offer',
+  FAVORITE: 'favorite',
+  AUTH: 'auth',
+  COMMON: 'common',
+} as const;
+
+const RequestStatus = {
+  FULFILLED: 'fulfilled',
+} as const;
+
 export {
   ApiEndpoint,
   ApiRoute,
@@ -92,11 +104,13 @@ export {
   AuthStatus,
   BookmarkType,
   City,
+  FeatureModule,
   Leaflet,
   MapType,
   NEAR_PLACES_TO_SHOW,
   PlaceCardType,
   RatingType,
+  RequestStatus,
   SortType,
   UrlMarker
 };

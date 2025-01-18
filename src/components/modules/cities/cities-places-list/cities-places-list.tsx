@@ -1,6 +1,8 @@
+import { useAppSelector } from '@/hooks/store/useAppSelector';
+import { getCurrentSort } from '@/store/modules/common/selectors';
+
 import PlaceCard from '@/components/common/place-card/place-card';
 
-import { useAppSelector } from '@/hooks/store/useAppSelector';
 import { ID } from '@/types/id';
 import { OfferCard } from '@/types/offer/offer';
 import { PlaceCardType as PlaceCardTypeEnum } from '@/utils/consts';
@@ -23,7 +25,7 @@ function CitiesPlacesList({
   onMouseOver,
   onMouseLeave,
 }: CitiesPlacesListProp): JSX.Element {
-  const currentSort = useAppSelector((state) => state.currentSort);
+  const currentSort = useAppSelector(getCurrentSort);
   const offersSorted = sortOffers(places, currentSort);
 
   return (

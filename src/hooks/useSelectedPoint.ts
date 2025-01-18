@@ -9,7 +9,6 @@ function useSelectedPoint(id?: ID) {
     setSelectedPointId(pointId ?? null);
   };
 
-
   return {
     selectedPointId,
     handleSelectedPointState

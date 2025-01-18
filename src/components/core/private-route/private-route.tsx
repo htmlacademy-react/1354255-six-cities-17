@@ -1,18 +1,18 @@
+import { isValidElement, PropsWithChildren } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { ValueOf } from '@/types/helpers';
+import { useAppSelector } from '@/hooks/store/useAppSelector';
+import { getAuthStatus } from '@/store/modules/auth/selectors';
+
 import { AppRoute, AuthStatus } from '@/utils/consts';
 
-type PrivateRouteProps = Readonly<{
-  authStatus: ValueOf<typeof AuthStatus>;
-  children: JSX.Element;
-}>
+function PrivateRoute({ children }: PropsWithChildren): JSX.Element {
+  const authStatus = useAppSelector(getAuthStatus);
 
-function PrivateRoute({ authStatus, children }: PrivateRouteProps): JSX.Element {
-  return (
-    authStatus === AuthStatus.Auth
-      ? children
-      : <Navigate to={AppRoute.Login} />
+  return authStatus === AuthStatus.Auth && isValidElement(children) ? (
+    children
+  ) : (
+    <Navigate to={AppRoute.Login} />
   );
 }
 

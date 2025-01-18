@@ -1,6 +1,8 @@
 import { ValueOf } from '@/types/helpers';
 import { OfferCard } from '@/types/offer';
-import { SortType } from '@/utils/consts';
+import { RequestStatus, SortType } from '@/utils/consts';
+import { PayloadAction } from '@reduxjs/toolkit';
+
 // 100% / 5 (max rating)
 const RATING_COEF = 20;
 
@@ -21,16 +23,27 @@ const humanizeDate = (date: string) => {
 
 const sortBy = {
   [SortType.POPULAR]: (offerCards: OfferCard[]) => [...offerCards],
-  [SortType.HIGH_TO_LOW]: (offerCards: OfferCard[]) => offerCards.toSorted((a, b) => a.price - b.price),
-  [SortType.LOW_TO_HIGH]: (offerCards: OfferCard[]) => offerCards.toSorted((a, b) => b.price - a.price),
-  [SortType.TOP_RATED]: (offerCards: OfferCard[]) => offerCards.toSorted((a, b) => a.rating - b.rating),
+  [SortType.HIGH_TO_LOW]: (offerCards: OfferCard[]) =>
+    offerCards.toSorted((a, b) => a.price - b.price),
+  [SortType.LOW_TO_HIGH]: (offerCards: OfferCard[]) =>
+    offerCards.toSorted((a, b) => b.price - a.price),
+  [SortType.TOP_RATED]: (offerCards: OfferCard[]) =>
+    offerCards.toSorted((a, b) => a.rating - b.rating),
 };
 
-const sortOffers = (offerCards: OfferCard[], sortType: ValueOf<typeof SortType>) => sortBy[sortType](offerCards);
+const sortOffers = (
+  offerCards: OfferCard[],
+  sortType: ValueOf<typeof SortType>
+) => sortBy[sortType](offerCards);
+
+const isRequestOK = (
+  response: PayloadAction<unknown, string, { requestStatus: unknown }>
+) => response.meta.requestStatus === RequestStatus.FULFILLED;
 
 export {
   capitalizeFirstLetter,
   convertRatingToStyle,
   humanizeDate,
-  sortOffers,
+  isRequestOK,
+  sortOffers
 };
