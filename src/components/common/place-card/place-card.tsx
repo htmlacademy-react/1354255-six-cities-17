@@ -88,7 +88,7 @@ function PlaceCard({
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <BookmarkButton isActive={isFavorite} {...BOOKMARK_STYLES} />
+          <BookmarkButton isActive={isFavorite} offer={place} {...BOOKMARK_STYLES} />
         </div>
 
         <Rating rating={rating} type={RatingType.PlaceCard} />
