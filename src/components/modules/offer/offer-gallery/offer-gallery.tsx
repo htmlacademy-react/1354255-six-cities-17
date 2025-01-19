@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 type OfferGalleryProps = Readonly<{
   photoUrls: string[];
 }>
@@ -18,4 +20,4 @@ function OfferGallery({ photoUrls }: OfferGalleryProps): JSX.Element {
   );
 }
 
-export default OfferGallery;
+export default memo(OfferGallery);

@@ -2,32 +2,34 @@ import { clsx } from 'clsx';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { useAppDispatch } from '@/hooks/store/useAppDispatch';
+import { useAppSelector } from '@/hooks/store/useAppSelector';
+import useSelectedPoint from '@/hooks/useSelectedPoint';
+import { fetchOffersAction } from '@/store/modules/cities/api-actions';
+import { getPlaces } from '@/store/modules/cities/selectors';
+import { getCurrentCity } from '@/store/modules/common/selectors';
+
 import Header from '@/components/common/header/header';
 import MapSection from '@/components/common/map-section/map-section';
-import { fetchOffersAction } from '@/store/api-actions';
 import CitiesPlacesEmpty from '~/cities/cities-places-empty/cities-places-empty';
 import CitiesPlaces from '~/cities/cities-places/cities-places';
 import CitiesTabs from '~/cities/cities-tabs/cities-tabs';
 
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import useSelectedPoint from '@/hooks/useSelectedPoint';
 import offerApiService from '@/service/offer-api-service';
 import { MapType } from '@/utils/consts';
 
 function MainPage(): JSX.Element {
-  const offerCards = useAppSelector((state) => state.offerCards);
-  const currentCity = useAppSelector((state) => state.currentCity);
+  const offerCards = useAppSelector(getPlaces);
+  const currentCity = useAppSelector(getCurrentCity);
   const dispatch = useAppDispatch();
+  const { selectedPointId, handleSelectedPointState } = useSelectedPoint();
 
   const places = offerApiService.getOffersInCity(offerCards, currentCity);
   const hasPlaces = !!places.length;
 
-  const { selectedPointId, handleSelectedPointState } = useSelectedPoint();
-
   useEffect(() => {
     dispatch(fetchOffersAction());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div

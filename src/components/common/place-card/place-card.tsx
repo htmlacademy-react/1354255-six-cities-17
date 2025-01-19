@@ -1,4 +1,5 @@
 import { clsx } from 'clsx';
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import BookmarkButton from '@/components/common/bookmark-button/bookmark-button';
@@ -11,14 +12,14 @@ import {
   AppRoute,
   BookmarkType,
   PlaceCardType,
-  RatingType
+  RatingType,
 } from '@/utils/consts';
 import { capitalizeFirstLetter } from '@/utils/helpers';
 
 const BOOKMARK_STYLES = {
   type: BookmarkType.PlaceCard,
   width: 18,
-  height: 19
+  height: 19,
 };
 
 type PlaceCardProps = Readonly<{
@@ -28,7 +29,7 @@ type PlaceCardProps = Readonly<{
   imageHeight?: number;
   onMouseOver?: (id: ID) => void;
   onMouseLeave?: () => void;
-}>
+}>;
 
 function PlaceCard({
   place,
@@ -36,7 +37,7 @@ function PlaceCard({
   imageWidth = 260,
   imageHeight = 200,
   onMouseOver,
-  onMouseLeave
+  onMouseLeave,
 }: PlaceCardProps): JSX.Element {
   const {
     previewImage,
@@ -46,21 +47,27 @@ function PlaceCard({
     price,
     rating,
     type,
-    id
+    id,
   } = place;
+
+  const handleMouseEnter = useCallback(
+    () => onMouseOver?.(id),
+    [id, onMouseOver]
+  );
+
+  const handleMouseLeave = useCallback(() => onMouseLeave?.(), [onMouseLeave]);
 
   return (
     <article
       className={clsx('place-card', `${cardType}__card`)}
-      onMouseEnter={() => onMouseOver?.(id)}
-      onMouseLeave={() => onMouseLeave?.()}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      {
-        isPremium &&
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
-      }
+      )}
 
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
         <Link to={`${AppRoute.Offer}/${id}`}>
@@ -69,7 +76,7 @@ function PlaceCard({
             src={previewImage}
             width={imageWidth}
             height={imageHeight}
-            alt=''
+            alt=""
           />
         </Link>
       </div>
@@ -87,7 +94,9 @@ function PlaceCard({
         <Rating rating={rating} type={RatingType.PlaceCard} />
 
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/${id}`}>{capitalizeFirstLetter(title)}</Link>
+          <Link to={`${AppRoute.Offer}/${id}`}>
+            {capitalizeFirstLetter(title)}
+          </Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(type)}</p>
       </div>

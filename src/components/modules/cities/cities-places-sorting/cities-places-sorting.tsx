@@ -1,19 +1,21 @@
-import { useRef, useState, useEffect } from 'react';
 import { clsx } from 'clsx';
+import { useEffect, useRef, useState } from 'react';
 
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import { useAppSelector } from '@/hooks/store/useAppSelector';
+import { setCurrentSort } from '@/store/modules/common/actions';
+import { getCurrentSort } from '@/store/modules/common/selectors';
+
 import { SortType } from '@/utils/consts';
-import { setCurrentSort } from '@/store/actions';
 
 function CitiesPlacesSorting(): JSX.Element {
   const sortSpanRef = useRef<HTMLElement>(null);
-  const [isMenuOpened, setMenuOpened] = useState(false);
+  const [isMenuOpened, setIsMenuOpened] = useState(false);
 
   const dispatch = useAppDispatch();
-  const currentSort = useAppSelector((state) => state.currentSort);
+  const currentSort = useAppSelector(getCurrentSort);
 
-  const onClick = () => setMenuOpened((prevState) => !prevState);
+  const handleSortClick = () => setIsMenuOpened((prevState) => !prevState);
 
   const hideSortList = (evt: Event) => {
     if (
@@ -21,7 +23,7 @@ function CitiesPlacesSorting(): JSX.Element {
       sortSpanRef.current &&
       !sortSpanRef.current.contains(evt.target)
     ) {
-      setMenuOpened(false);
+      setIsMenuOpened(false);
     }
   };
 
@@ -39,7 +41,7 @@ function CitiesPlacesSorting(): JSX.Element {
         className="places__sorting-type"
         ref={sortSpanRef}
         tabIndex={0}
-        onClick={onClick}
+        onClick={handleSortClick}
       >
         {currentSort}
         <svg className="places__sorting-arrow" width="7" height="4">

@@ -1,16 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
 
-import Header from '@/components/common/header/header';
-import MapSection from '@/components/common/map-section/map-section';
-import OfferDescription from '~/offer/offer-description/offer-description';
-import OfferGallery from '~/offer/offer-gallery/offer-gallery';
-import OfferHost from '~/offer/offer-host/offer-host';
-import OfferNearPlaces from '~/offer/offer-near-places/offer-near-places';
-import OfferReviews from '~/offer/offer-reviews/offer-reviews';
-
-import Loader from '@/components/common/loader/loader';
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import { useAppSelector } from '@/hooks/store/useAppSelector';
 import useSelectedPoint from '@/hooks/useSelectedPoint';
@@ -18,41 +9,60 @@ import {
   fetchNearbyOffers,
   fetchOfferComments,
   getOfferByID,
-} from '@/store/api-actions';
+} from '@/store/modules/offer/api-actions';
+import {
+  getNearPlaces,
+  getOffer,
+  getReviews,
+} from '@/store/modules/offer/selectors';
+
+import Header from '@/components/common/header/header';
+import Loader from '@/components/common/loader/loader';
+import MapSection from '@/components/common/map-section/map-section';
+import OfferDescription from '~/offer/offer-description/offer-description';
+import OfferGallery from '~/offer/offer-gallery/offer-gallery';
+import OfferHost from '~/offer/offer-host/offer-host';
+import OfferNearPlaces from '~/offer/offer-near-places/offer-near-places';
+import OfferReviews from '~/offer/offer-reviews/offer-reviews';
+
 import { AppRoute, MapType, NEAR_PLACES_TO_SHOW } from '@/utils/consts';
+import { isRequestOK } from '@/utils/helpers';
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();
 
   const { selectedPointId, handleSelectedPointState } = useSelectedPoint(id);
   const dispatch = useAppDispatch();
-  const offer = useAppSelector((state) => state.offer);
-  const nearPlaces = useAppSelector((state) => state.offersNearby).slice(
+  const offer = useAppSelector(getOffer);
+  const nearPlaces = useAppSelector(getNearPlaces).slice(
     0,
     NEAR_PLACES_TO_SHOW
   );
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews = useAppSelector(getReviews);
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const getOfferInfo = async (offerId: string) => {
-    const response = await dispatch(getOfferByID(offerId));
+  const getOfferInfo = useCallback(
+    async (offerId: string) => {
+      const response = await dispatch(getOfferByID(offerId));
 
-    if (response.meta.requestStatus === 'fulfilled') {
-      await Promise.all([
-        dispatch(fetchNearbyOffers(offerId)),
-        dispatch(fetchOfferComments(offerId)),
-      ]);
+      if (isRequestOK(response)) {
+        await Promise.all([
+          dispatch(fetchNearbyOffers(offerId)),
+          dispatch(fetchOfferComments(offerId)),
+        ]);
 
-      setIsLoading(false);
-    }
-  };
+        setIsLoading(false);
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     if (id) {
       getOfferInfo(id);
     }
-  }, [id]);
+  }, [id, dispatch, getOfferInfo]);
 
   if (!offer && !isLoading) {
     return <Navigate to={AppRoute.NotFound} />;
