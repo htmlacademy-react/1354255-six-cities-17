@@ -21,6 +21,7 @@ const fetchOffersAction = createAsyncThunk<
   }
 >(Action.fetchOffers, async (_arg, { dispatch, extra: api }) => {
   const { data } = await api.get<OfferCard[]>(ApiRoute.OFFERS);
+
   dispatch(loadOffers(data));
 });
 

@@ -6,10 +6,11 @@ import Header from '@/components/common/header/header';
 import FavoritesEmpty from '~/favorites/favorites-empty/favorites-empty';
 import FavoritesList from '~/favorites/favorites-list/favorites-list';
 
-import favoriteApiService from '@/service/favorite-api-service';
+import { useAppSelector } from '@/hooks/store/useAppSelector';
+import { getFavorites } from '@/store/modules/favorite/selectors';
 
 function FavoritesPage(): JSX.Element {
-  const places = favoriteApiService.favorite;
+  const places = useAppSelector(getFavorites);
   const hasPlaces = !!places.length;
 
   return (

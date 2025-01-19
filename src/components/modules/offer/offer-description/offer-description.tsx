@@ -15,26 +15,14 @@ const BOOKMARK_STYLES = {
 };
 
 type OfferDescriptionProps = Readonly<{
-  offer: Omit<OfferFull, 'id' | 'city' | 'location' | 'description' | 'images' | 'host'>;
+  offer: OfferFull;
 }>
 
 function OfferDescription({ offer }: OfferDescriptionProps): JSX.Element {
-  const {
-    title,
-    type,
-    price,
-    isPremium,
-    isFavorite,
-    rating,
-    goods,
-    bedrooms,
-    maxAdults,
-  } = offer;
-
   return (
     <>
       {
-        isPremium &&
+        offer.isPremium &&
         <div className="offer__mark">
           <span>Premium</span>
         </div>
@@ -42,21 +30,21 @@ function OfferDescription({ offer }: OfferDescriptionProps): JSX.Element {
 
       <div className="offer__name-wrapper">
         <h1 className="offer__name">
-          {title}
+          {offer.title}
         </h1>
 
-        <BookmarkButton isActive={isFavorite} {...BOOKMARK_STYLES} />
+        <BookmarkButton isActive={offer.isFavorite} offer={offer} {...BOOKMARK_STYLES} />
       </div>
 
-      <Rating type={RatingType.Offer} rating={rating} />
-      <OfferFeatures type={type} bedroomsCount={bedrooms} maxAdults={maxAdults} />
+      <Rating type={RatingType.Offer} rating={offer.rating} />
+      <OfferFeatures type={offer.type} bedroomsCount={offer.bedrooms} maxAdults={offer.maxAdults} />
 
       <div className="offer__price">
-        <b className="offer__price-value">&euro;{price}</b>
+        <b className="offer__price-value">&euro;{offer.price}</b>
         <span className="offer__price-text">&nbsp;night</span>
       </div>
 
-      <OfferInside insideItems={goods} />
+      <OfferInside insideItems={offer.goods} />
     </>
   );
 }
