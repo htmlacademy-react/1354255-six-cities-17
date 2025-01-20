@@ -8,7 +8,7 @@ import { ApiRoute, FeatureModule } from '@/utils/consts';
 import { loadOffers } from './actions';
 
 const Action = {
-  fetchOffers: `${FeatureModule.COMMON}/fetchOffers`,
+  fetchOffers: `${FeatureModule.CITIES}/fetchOffers`,
 } as const;
 
 const fetchOffersAction = createAsyncThunk<
