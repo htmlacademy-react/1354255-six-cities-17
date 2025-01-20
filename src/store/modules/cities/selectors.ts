@@ -3,4 +3,10 @@ import { FeatureModule } from '@/utils/consts';
 
 const getPlaces = (state: State) => state[FeatureModule.CITIES].offerCards;
 
-export { getPlaces };
+const getCurrentCity = (state: State) =>
+  state[FeatureModule.CITIES].currentCity;
+
+const getCurrentSort = (state: State) =>
+  state[FeatureModule.CITIES].currentSort;
+
+export { getCurrentCity, getCurrentSort, getPlaces };

@@ -3,8 +3,8 @@ import { memo, MouseEvent } from 'react';
 
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { setCurrentCity } from '@/store/modules/common/actions';
-import { getCurrentCity } from '@/store/modules/common/selectors';
+import { setCurrentCity } from '@/store/modules/cities/actions';
+import { getCurrentCity } from '@/store/modules/cities/selectors';
 
 import LocationItem from '@/components/common/location-item/location-item';
 
