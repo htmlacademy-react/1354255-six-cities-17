@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { getCurrentCity } from '@/store/modules/common/selectors';
+import { getCurrentCity } from '@/store/modules/cities/selectors';
 
 import CitiesPlacesList from '~/cities/cities-places-list/cities-places-list';
 import CitiesPlacesSorting from '~/cities/cities-places-sorting/cities-places-sorting';

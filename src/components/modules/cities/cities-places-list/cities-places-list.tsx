@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { getCurrentSort } from '@/store/modules/common/selectors';
+import { getCurrentSort } from '@/store/modules/cities/selectors';
 
 import PlaceCard from '@/components/common/place-card/place-card';
 

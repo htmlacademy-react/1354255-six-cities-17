@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { setCurrentSort } from '@/store/modules/common/actions';
-import { getCurrentSort } from '@/store/modules/common/selectors';
+import { setCurrentSort } from '@/store/modules/cities/actions';
+import { getCurrentSort } from '@/store/modules/cities/selectors';
 
 import { SortType } from '@/utils/consts';
 

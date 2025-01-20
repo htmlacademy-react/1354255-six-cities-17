@@ -1,30 +1,10 @@
 import { CityValue } from '@/types/city';
-import {
-  MOCK_OFFERS,
-  MOCK_OFFERS_BY_ID,
-  MOCK_OFFERS_NEARBY
-} from '@/mocks/offers';
-import { ID } from '@/types/id';
-import { OfferFull, OfferCard } from '@/types/offer';
+import { OfferCard } from '@/types/offer';
 
 class OfferApiService {
-  readonly #NEAR_PLACES_TO_SHOW = 3;
-
-  getOffers() {
-    return MOCK_OFFERS;
-  }
-
-  getOfferById(id: ID): OfferFull | undefined {
-    return MOCK_OFFERS_BY_ID[id];
-  }
-
-  getOffersNearBy(id: ID) {
-    return MOCK_OFFERS_NEARBY[id].slice(0, this.#NEAR_PLACES_TO_SHOW);
-  }
-
-  getOffersInCity(offers: OfferCard[], city: CityValue): OfferCard[] {
+  static getOffersInCity(offers: OfferCard[], city: CityValue): OfferCard[] {
     return offers.filter((offer) => offer.city.name === city);
   }
 }
 
-export default new OfferApiService();
+export default OfferApiService;

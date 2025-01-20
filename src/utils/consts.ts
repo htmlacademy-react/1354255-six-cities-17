@@ -90,7 +90,6 @@ const FeatureModule = {
   OFFER: 'offer',
   FAVORITE: 'favorite',
   AUTH: 'auth',
-  COMMON: 'common',
 } as const;
 
 const RequestStatus = {
