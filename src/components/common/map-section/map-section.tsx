@@ -5,17 +5,15 @@ import { useEffect, useRef } from 'react';
 import useMap from '@/hooks/useMap';
 import { ValueOf } from '@/types/helpers';
 import { ID } from '@/types/id';
-import { OfferCard } from '@/types/offer';
-import {
-  MapType,
-  UrlMarker
-} from '@/utils/consts';
+import { OfferCard, OfferFull } from '@/types/offer';
+import { MapType, UrlMarker } from '@/utils/consts';
 
 type MapSectionProps = Readonly<{
   type: ValueOf<typeof MapType>;
   offers: OfferCard[];
   selectedOfferId: ID | null;
-}>
+  currentOffer?: OfferFull;
+}>;
 
 const defaultCustomIcon = new Icon({
   iconUrl: UrlMarker.DEFAULT,
@@ -25,41 +23,45 @@ const currentCustomIcon = new Icon({
   iconUrl: UrlMarker.CURRENT,
 });
 
-function MapSection({ type, offers, selectedOfferId }: MapSectionProps): JSX.Element {
-  const startCity = offers[0].city;
+function MapSection({
+  type,
+  offers,
+  selectedOfferId,
+  currentOffer,
+}: MapSectionProps): JSX.Element {
+  const startCity = currentOffer?.city ?? offers[0].city;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, startCity);
 
-  useEffect(
-    () => {
-      if (map) {
-        const markerLayer = layerGroup().addTo(map);
+  const offerMarkers: Array<OfferCard | OfferFull> = [...offers];
 
-        offers.forEach((offer) => {
-          const { latitude: lat, longitude: lng } = offer.location;
+  if (currentOffer) {
+    offerMarkers.push(currentOffer);
+  }
 
-          const customIcon = (offer.id === selectedOfferId) ? currentCustomIcon : defaultCustomIcon;
+  useEffect(() => {
+    if (map) {
+      const markerLayer = layerGroup().addTo(map);
 
-          const marker = new Marker({ lat, lng });
+      offerMarkers.forEach((offer) => {
+        const { latitude: lat, longitude: lng } = offer.location;
 
-          marker.setIcon(customIcon).addTo(markerLayer);
-        });
+        const customIcon =
+          offer.id === selectedOfferId ? currentCustomIcon : defaultCustomIcon;
 
-        return () => {
-          map.removeLayer(markerLayer);
-        };
-      }
-    },
-    [map, offers, selectedOfferId]);
+        const marker = new Marker({ lat, lng });
 
-  return (
-    <section
-      className={`${type}__map map`}
-      ref={mapRef}
-    >
-    </section>
-  );
+        marker.setIcon(customIcon).addTo(markerLayer);
+      });
+
+      return () => {
+        map.removeLayer(markerLayer);
+      };
+    }
+  }, [map, offers, selectedOfferId]);
+
+  return <section className={`${type}__map map`} ref={mapRef}></section>;
 }
 
 export default MapSection;

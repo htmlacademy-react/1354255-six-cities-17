@@ -1,16 +1,14 @@
 import { User } from './user';
 
 type Comment = {
-  review: string;
+  comment: string;
   rating: number;
 };
 
-type UserComment = {
+type UserComment = Comment & {
   id: string;
   date: string;
   user: User;
-  comment: string;
-  rating: number;
 };
 
 type CommentRequest = {

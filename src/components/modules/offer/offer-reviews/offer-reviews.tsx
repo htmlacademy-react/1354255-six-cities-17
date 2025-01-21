@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import { useAppSelector } from '@/hooks/store/useAppSelector';
 import { getAuthStatus } from '@/store/modules/auth/selectors';
 
@@ -33,4 +31,4 @@ function OfferReviews({ reviews }: OfferReviewsProps): JSX.Element {
   );
 }
 
-export default memo(OfferReviews);
+export default OfferReviews;

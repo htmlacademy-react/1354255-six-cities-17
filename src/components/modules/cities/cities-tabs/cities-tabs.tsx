@@ -3,7 +3,7 @@ import { memo, MouseEvent } from 'react';
 
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { setCurrentCity } from '@/store/modules/cities/actions';
+import { resetSort, setCurrentCity } from '@/store/modules/cities/actions';
 import { getCurrentCity } from '@/store/modules/cities/selectors';
 
 import LocationItem from '@/components/common/location-item/location-item';
@@ -19,6 +19,7 @@ function CitiesTabs(): JSX.Element {
     evt.preventDefault();
 
     dispatch(setCurrentCity(city));
+    dispatch(resetSort());
   };
 
   return (

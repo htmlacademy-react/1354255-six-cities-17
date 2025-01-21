@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
@@ -7,8 +7,9 @@ import {
   postOfferComments,
 } from '@/store/modules/offer/api-actions';
 
-import commentsApiService from '@/service/comments-api-service';
+import { MIN_CHARACTERS_IN_REVIEW } from '@/utils/consts';
 import { isRequestOK } from '@/utils/helpers';
+import { isReviewValid } from '@/utils/validators';
 
 const RATING_STARS = [
   {
@@ -33,14 +34,13 @@ const RATING_STARS = [
   },
 ];
 
-const MIN_CHARACTERS_IN_REVIEW = 50;
-
 function OfferReviewsForm(): JSX.Element {
   const { id } = useParams();
   const [formValues, setFormValues] = useState({
     rating: 0,
-    review: '',
+    comment: '',
   });
+  const [isDisabled, setIsDisabled] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -53,34 +53,48 @@ function OfferReviewsForm(): JSX.Element {
   const handleTextareaChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setFormValues({
       ...formValues,
-      review: evt.target.value,
+      comment: evt.target.value,
     });
   };
 
-  const handleFormSubmit = async () => {
-    if (!commentsApiService.isCommentValid(formValues) || !id) {
-      return;
-    }
+  const handleFormSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
 
-    const response = await dispatch(
-      postOfferComments({
-        id,
-        comment: formValues,
-      })
-    );
+    try {
+      setIsDisabled(true);
 
-    if (isRequestOK(response)) {
-      dispatch(fetchOfferComments(id));
+      if (!isReviewValid(formValues) || !id) {
+        return;
+      }
 
-      setFormValues({
-        rating: 0,
-        review: '',
-      });
+      const response = await dispatch(
+        postOfferComments({
+          id,
+          comment: formValues,
+        })
+      );
+
+      if (isRequestOK(response)) {
+        dispatch(fetchOfferComments(id));
+
+        setFormValues({
+          rating: 0,
+          comment: '',
+        });
+      }
+    } finally {
+      setIsDisabled(false);
     }
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      onSubmit={handleFormSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -94,6 +108,7 @@ function OfferReviewsForm(): JSX.Element {
               id={`${value}-stars`}
               type="radio"
               onChange={handleRatingChange}
+              disabled={isDisabled}
             />
 
             <label
@@ -115,25 +130,24 @@ function OfferReviewsForm(): JSX.Element {
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleTextareaChange}
-      >
-      </textarea>
+        disabled={isDisabled}
+      />
 
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe your stay
-          with at least <b className="reviews__text-amount">{MIN_CHARACTERS_IN_REVIEW} characters</b>.
+          with at least{' '}
+          <b className="reviews__text-amount">
+            {MIN_CHARACTERS_IN_REVIEW} characters
+          </b>
+          .
         </p>
 
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={formValues.review.length < MIN_CHARACTERS_IN_REVIEW}
-          onSubmit={() => {
-            void (async () => {
-              await handleFormSubmit();
-            })();
-          }}
+          disabled={!isReviewValid(formValues) || isDisabled}
         >
           Submit
         </button>

@@ -4,8 +4,10 @@ import { AxiosInstance } from 'axios';
 import { OfferCard, OfferFull } from '@/types/offer';
 import { AppDispatch, State } from '@/types/store';
 import { ApiRoute, FeatureModule } from '@/utils/consts';
+import { showError } from '@/utils/helpers';
 
 import { loadOffers } from '../cities/actions';
+import { loadFavorites } from './actions';
 
 const FavoriteStatus = {
   IS_FAVORITE: 1,
@@ -14,10 +16,11 @@ const FavoriteStatus = {
 
 const Action = {
   updateOfferFavoriteStatusAction: `${FeatureModule.FAVORITE}/updateOfferFavoriteStatusAction`,
+  fetchFavoriteOffersAction: `${FeatureModule.FAVORITE}/fetchFavoriteOffersAction`,
 } as const;
 
 const updateOfferFavoriteStatusAction = createAsyncThunk<
-  OfferCard[],
+  OfferCard[] | undefined,
   { offer: OfferCard | OfferFull; isFavorite: boolean },
   {
     dispatch: AppDispatch;
@@ -31,14 +34,38 @@ const updateOfferFavoriteStatusAction = createAsyncThunk<
       ? FavoriteStatus.NOT_FAVORITE
       : FavoriteStatus.IS_FAVORITE;
 
-    await api.post<OfferCard[]>(`${ApiRoute.FAVORITE}/${offer.id}/${status}`);
+    try {
+      await api.post<OfferCard[]>(`${ApiRoute.FAVORITE}/${offer.id}/${status}`);
 
-    const { data } = await api.get<OfferCard[]>(ApiRoute.OFFERS);
+      const { data } = await api.get<OfferCard[]>(ApiRoute.OFFERS);
 
-    dispatch(loadOffers(data));
+      dispatch(loadOffers(data));
 
-    return data;
+      return data;
+    } catch (error) {
+      showError(error);
+    }
   }
 );
 
-export { updateOfferFavoriteStatusAction };
+const fetchFavoriteOffersAction = createAsyncThunk<
+  OfferCard[] | undefined,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>(Action.fetchFavoriteOffersAction, async (_arg, { dispatch, extra: api }) => {
+  try {
+    const { data } = await api.get<OfferCard[]>(ApiRoute.FAVORITE);
+
+    dispatch(loadFavorites(data));
+
+    return data;
+  } catch (error) {
+    showError(error);
+  }
+});
+
+export { fetchFavoriteOffersAction, updateOfferFavoriteStatusAction };

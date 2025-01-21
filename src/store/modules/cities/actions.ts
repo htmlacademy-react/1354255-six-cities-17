@@ -9,6 +9,7 @@ const Action = {
   loadOffers: `${FeatureModule.CITIES}/loadOffers`,
   setCurrentCity: `${FeatureModule.CITIES}/setCurrentCity`,
   setCurrentSort: `${FeatureModule.CITIES}/setCurrentSort`,
+  resetSort: `${FeatureModule.CITIES}/resetSort`,
 } as const;
 
 const loadOffers = createAction<OfferCard[]>(Action.loadOffers);
@@ -19,4 +20,6 @@ const setCurrentSort = createAction<ValueOf<typeof SortType>>(
   Action.setCurrentSort
 );
 
-export { loadOffers, setCurrentCity, setCurrentSort };
+const resetSort = createAction(Action.resetSort);
+
+export { loadOffers, resetSort, setCurrentCity, setCurrentSort };

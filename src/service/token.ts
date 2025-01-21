@@ -1,6 +1,6 @@
 import { Token } from '@/types/token';
 
-const AUTH_TOKEN_KEY_NAME = 'cities-token';
+const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
 export const getToken = (): Token => {
   const token = localStorage.getItem(AUTH_TOKEN_KEY_NAME);

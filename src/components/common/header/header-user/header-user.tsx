@@ -1,8 +1,11 @@
+import { shallowEqual } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import { useAppSelector } from '@/hooks/store/useAppSelector';
 import { getFavorites } from '@/store/modules/favorite/selectors';
+
 import { ValueOf } from '@/types/helpers';
 import { AppRoute, AuthStatus } from '@/utils/consts';
-import { Link } from 'react-router-dom';
 
 type HeaderUserProps = Readonly<{
   authStatus: ValueOf<typeof AuthStatus>;
@@ -11,7 +14,7 @@ type HeaderUserProps = Readonly<{
 function HeaderUser({ authStatus }: HeaderUserProps): JSX.Element {
   const link =
     authStatus === AuthStatus.Auth ? AppRoute.Favorites : AppRoute.Login;
-  const favoritesCount = useAppSelector(getFavorites).length;
+  const favoritesCount = useAppSelector(getFavorites, shallowEqual).length;
 
   return (
     <li className="header__nav-item user">

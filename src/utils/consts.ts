@@ -85,6 +85,8 @@ const ApiRoute = {
 
 const NEAR_PLACES_TO_SHOW = 3;
 
+const MIN_CHARACTERS_IN_REVIEW = 50;
+
 const FeatureModule = {
   CITIES: 'cities',
   OFFER: 'offer',
@@ -106,6 +108,7 @@ export {
   FeatureModule,
   Leaflet,
   MapType,
+  MIN_CHARACTERS_IN_REVIEW,
   NEAR_PLACES_TO_SHOW,
   PlaceCardType,
   RatingType,

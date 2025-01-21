@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import { loginAction } from '@/store/modules/auth/api-actions';
+import { isPasswordValid } from '@/utils/validators';
 
 type Form = {
   login: string;
@@ -25,6 +26,10 @@ function LoginForm(): JSX.Element {
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
+    if (!isPasswordValid(formValues.password)) {
+      return;
+    }
 
     if (Object.values(formValues).every(Boolean)) {
       dispatch(
