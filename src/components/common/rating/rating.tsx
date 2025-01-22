@@ -14,6 +14,7 @@ function Rating({ type, rating }: RatingProps): JSX.Element {
         <span style={{ width: convertRatingToStyle(rating) }}></span>
         <span className="visually-hidden">Rating</span>
       </div>
+      { type === RatingType.Offer && <span className="offer__rating-value rating__value">{rating}</span>}
     </div>
   );
 }

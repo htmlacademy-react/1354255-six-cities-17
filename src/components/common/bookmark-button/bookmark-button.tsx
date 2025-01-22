@@ -1,5 +1,4 @@
 import { clsx } from 'clsx';
-import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
@@ -17,7 +16,7 @@ type BookmarkButtonProps = Readonly<{
   width?: number;
   height?: number;
   offer: OfferCard | OfferFull;
-  onUpdateInfo?: () => void;
+  onUpdateInfo: () => Promise<unknown>;
 }>;
 
 function BookmarkButton({
@@ -32,15 +31,15 @@ function BookmarkButton({
   const dispatch = useAppDispatch();
   const notAuthed = useAppSelector(getAuthStatus) !== AuthStatus.Auth;
 
-  const handleFavoriteClick = () => {
+  const handleFavoriteClick = async () => {
     if (notAuthed) {
       navigate(AppRoute.Login);
     }
 
-    dispatch(updateOfferFavoriteStatusAction({ offer, isFavorite: isActive }));
+    await dispatch(updateOfferFavoriteStatusAction({ offer, isFavorite: isActive }));
 
     if (onUpdateInfo) {
-      onUpdateInfo();
+      await onUpdateInfo();
     }
   };
 
@@ -52,6 +51,7 @@ function BookmarkButton({
         isActive && `${type}__bookmark-button--active`
       )}
       type="button"
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onClick={handleFavoriteClick}
     >
       <svg className={`${type}__bookmark-icon`} width={width} height={height}>
@@ -64,4 +64,4 @@ function BookmarkButton({
   );
 }
 
-export default memo(BookmarkButton);
+export default BookmarkButton;

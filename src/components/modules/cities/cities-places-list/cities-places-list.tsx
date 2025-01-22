@@ -1,4 +1,6 @@
+import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import { useAppSelector } from '@/hooks/store/useAppSelector';
+import { fetchOffersAction } from '@/store/modules/cities/api-actions';
 import { getCurrentSort } from '@/store/modules/cities/selectors';
 
 import PlaceCard from '@/components/common/place-card/place-card';
@@ -27,6 +29,9 @@ function CitiesPlacesList({
 }: CitiesPlacesListProp): JSX.Element {
   const currentSort = useAppSelector(getCurrentSort);
   const offersSorted = sortOffers(places, currentSort);
+  const dispatch = useAppDispatch();
+
+  const handleInfoUpdate = async () => await dispatch(fetchOffersAction());
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -36,6 +41,7 @@ function CitiesPlacesList({
           key={place.id}
           onMouseOver={onMouseOver}
           onMouseLeave={onMouseLeave}
+          onUpdateInfo={handleInfoUpdate}
           {...CITIES_CARD_STYLES}
         />
       ))}

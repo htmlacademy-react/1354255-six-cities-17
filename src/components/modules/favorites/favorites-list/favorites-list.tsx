@@ -25,7 +25,7 @@ function FavoritesList({ places }: FavoritesListProps): JSX.Element {
   );
   const dispatch = useAppDispatch();
 
-  const updateInfoHandler = () => dispatch(fetchFavoriteOffersAction());
+  const handleInfoUpdate = async () => await dispatch(fetchFavoriteOffersAction());
 
   return (
     <section className="favorites">
@@ -43,8 +43,7 @@ function FavoritesList({ places }: FavoritesListProps): JSX.Element {
                 <PlaceCard
                   place={place}
                   key={place.id}
-                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                  onUpdateInfo={updateInfoHandler}
+                  onUpdateInfo={handleInfoUpdate}
                   {...FAVORITES_CARD_STYLES}
                 />
               ))}

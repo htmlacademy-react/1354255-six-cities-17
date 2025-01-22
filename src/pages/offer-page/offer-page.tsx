@@ -59,9 +59,9 @@ function OfferPage(): JSX.Element {
     [dispatch]
   );
 
-  const updateOfferHandler = () => dispatch(getOfferByID(id!));
+  const handleOfferUpdate = async () => await dispatch(getOfferByID(id!));
 
-  const updateNearbyOffersHandler = () => dispatch(fetchNearbyOffers(id!));
+  const handleNearbyOffersUpdate = async () => await dispatch(fetchNearbyOffers(id!));
 
   useEffect(() => {
     if (id) {
@@ -93,8 +93,7 @@ function OfferPage(): JSX.Element {
                 <div className="offer__wrapper">
                   <OfferDescription
                     offer={offer!}
-                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                    onUpdateInfo={updateOfferHandler}
+                    onUpdateInfo={handleOfferUpdate}
                   />
 
                   <OfferHost host={offer!.host} />
@@ -119,7 +118,7 @@ function OfferPage(): JSX.Element {
               <OfferNearPlaces
                 places={nearPlaces}
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                onUpdateInfo={updateNearbyOffersHandler}
+                onUpdateInfo={handleNearbyOffersUpdate}
               />
             </div>
           </main>

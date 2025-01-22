@@ -16,7 +16,7 @@ const BOOKMARK_STYLES = {
 
 type OfferDescriptionProps = Readonly<{
   offer: OfferFull;
-  onUpdateInfo?: () => void;
+  onUpdateInfo: () => Promise<unknown>;
 }>;
 
 function OfferDescription({

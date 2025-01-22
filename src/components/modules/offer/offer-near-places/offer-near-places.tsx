@@ -14,7 +14,7 @@ type OfferNearPlacesProps = Readonly<{
   places: OfferCard[];
   onMouseOver?: (id: ID) => void;
   onMouseLeave?: () => void;
-  onUpdateInfo: () => void;
+  onUpdateInfo: () => Promise<unknown>;
 }>;
 
 function OfferNearPlaces({

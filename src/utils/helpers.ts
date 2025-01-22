@@ -28,11 +28,11 @@ const humanizeDate = (date: string) => {
 const sortBy = {
   [SortType.POPULAR]: (offerCards: OfferCard[]) => [...offerCards],
   [SortType.HIGH_TO_LOW]: (offerCards: OfferCard[]) =>
-    offerCards.toSorted((offerA, offerB) => offerA.price - offerB.price),
-  [SortType.LOW_TO_HIGH]: (offerCards: OfferCard[]) =>
     offerCards.toSorted((offerA, offerB) => offerB.price - offerA.price),
+  [SortType.LOW_TO_HIGH]: (offerCards: OfferCard[]) =>
+    offerCards.toSorted((offerA, offerB) => offerA.price - offerB.price),
   [SortType.TOP_RATED]: (offerCards: OfferCard[]) =>
-    offerCards.toSorted((offerA, offerB) => offerA.rating - offerB.rating),
+    offerCards.toSorted((offerA, offerB) => offerB.rating - offerA.rating),
 };
 
 const sortOffers = (
@@ -63,5 +63,5 @@ export {
   isRequestOK,
   showError,
   sortComments,
-  sortOffers
+  sortOffers,
 };

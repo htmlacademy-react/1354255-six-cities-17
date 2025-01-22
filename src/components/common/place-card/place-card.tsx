@@ -29,7 +29,7 @@ type PlaceCardProps = Readonly<{
   imageHeight?: number;
   onMouseOver?: (id: ID) => void;
   onMouseLeave?: () => void;
-  onUpdateInfo?: () => void;
+  onUpdateInfo: () => Promise<unknown>;
 }>;
 
 function PlaceCard({
@@ -39,7 +39,7 @@ function PlaceCard({
   imageHeight = 200,
   onMouseOver,
   onMouseLeave,
-  onUpdateInfo
+  onUpdateInfo,
 }: PlaceCardProps): JSX.Element {
   const {
     previewImage,
@@ -90,7 +90,12 @@ function PlaceCard({
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <BookmarkButton isActive={isFavorite} offer={place} onUpdateInfo={onUpdateInfo} {...BOOKMARK_STYLES} />
+          <BookmarkButton
+            isActive={isFavorite}
+            offer={place}
+            onUpdateInfo={onUpdateInfo}
+            {...BOOKMARK_STYLES}
+          />
         </div>
 
         <Rating rating={rating} type={RatingType.PlaceCard} />
