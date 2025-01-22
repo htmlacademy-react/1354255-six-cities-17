@@ -105,6 +105,7 @@ function OfferReviewsForm(): JSX.Element {
               className="form__rating-input visually-hidden"
               name="rating"
               value={value}
+              checked={value === formValues.rating}
               id={`${value}-stars`}
               type="radio"
               onChange={handleRatingChange}
@@ -126,6 +127,7 @@ function OfferReviewsForm(): JSX.Element {
 
       <textarea
         className="reviews__textarea form__textarea"
+        value={formValues.comment}
         id="review"
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
