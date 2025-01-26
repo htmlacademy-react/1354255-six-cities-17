@@ -1,7 +1,11 @@
+import { PayloadAction } from '@reduxjs/toolkit';
+import { isAxiosError } from 'axios';
+import { toast } from 'react-toastify';
+
+import { UserComment } from '@/types/comment';
 import { ValueOf } from '@/types/helpers';
 import { OfferCard } from '@/types/offer';
 import { RequestStatus, SortType } from '@/utils/consts';
-import { PayloadAction } from '@reduxjs/toolkit';
 
 // 100% / 5 (max rating)
 const RATING_COEF = 20;
@@ -24,11 +28,11 @@ const humanizeDate = (date: string) => {
 const sortBy = {
   [SortType.POPULAR]: (offerCards: OfferCard[]) => [...offerCards],
   [SortType.HIGH_TO_LOW]: (offerCards: OfferCard[]) =>
-    offerCards.toSorted((a, b) => a.price - b.price),
+    offerCards.toSorted((offerA, offerB) => offerB.price - offerA.price),
   [SortType.LOW_TO_HIGH]: (offerCards: OfferCard[]) =>
-    offerCards.toSorted((a, b) => b.price - a.price),
+    offerCards.toSorted((offerA, offerB) => offerA.price - offerB.price),
   [SortType.TOP_RATED]: (offerCards: OfferCard[]) =>
-    offerCards.toSorted((a, b) => a.rating - b.rating),
+    offerCards.toSorted((offerA, offerB) => offerB.rating - offerA.rating),
 };
 
 const sortOffers = (
@@ -40,10 +44,24 @@ const isRequestOK = (
   response: PayloadAction<unknown, string, { requestStatus: unknown }>
 ) => response.meta.requestStatus === RequestStatus.FULFILLED;
 
+const sortComments = (comments: UserComment[]) =>
+  comments.toSorted(
+    (commentA, commentB) =>
+      Number(new Date(commentB.date)) - Number(new Date(commentA.date))
+  );
+
+const showError = (error: unknown) => {
+  if (isAxiosError(error)) {
+    toast.error(error.message);
+  }
+};
+
 export {
   capitalizeFirstLetter,
   convertRatingToStyle,
   humanizeDate,
   isRequestOK,
-  sortOffers
+  showError,
+  sortComments,
+  sortOffers,
 };

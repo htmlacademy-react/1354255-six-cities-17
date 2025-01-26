@@ -11,33 +11,43 @@ import { BookmarkType, RatingType } from '@/utils/consts';
 const BOOKMARK_STYLES = {
   type: BookmarkType.Offer,
   width: 31,
-  height: 33
+  height: 33,
 };
 
 type OfferDescriptionProps = Readonly<{
   offer: OfferFull;
-}>
+  onUpdateInfo: () => Promise<unknown>;
+}>;
 
-function OfferDescription({ offer }: OfferDescriptionProps): JSX.Element {
+function OfferDescription({
+  offer,
+  onUpdateInfo,
+}: OfferDescriptionProps): JSX.Element {
   return (
     <>
-      {
-        offer.isPremium &&
+      {offer.isPremium && (
         <div className="offer__mark">
           <span>Premium</span>
         </div>
-      }
+      )}
 
       <div className="offer__name-wrapper">
-        <h1 className="offer__name">
-          {offer.title}
-        </h1>
+        <h1 className="offer__name">{offer.title}</h1>
 
-        <BookmarkButton isActive={offer.isFavorite} offer={offer} {...BOOKMARK_STYLES} />
+        <BookmarkButton
+          isActive={offer.isFavorite}
+          offer={offer}
+          onUpdateInfo={onUpdateInfo}
+          {...BOOKMARK_STYLES}
+        />
       </div>
 
       <Rating type={RatingType.Offer} rating={offer.rating} />
-      <OfferFeatures type={offer.type} bedroomsCount={offer.bedrooms} maxAdults={offer.maxAdults} />
+      <OfferFeatures
+        type={offer.type}
+        bedroomsCount={offer.bedrooms}
+        maxAdults={offer.maxAdults}
+      />
 
       <div className="offer__price">
         <b className="offer__price-value">&euro;{offer.price}</b>

@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch } from '@/hooks/store/useAppDispatch';
 import { useAppSelector } from '@/hooks/store/useAppSelector';
-import useSelectedPoint from '@/hooks/useSelectedPoint';
+import useLoading from '@/hooks/useLoading';
 import {
   fetchNearbyOffers,
   fetchOfferComments,
@@ -28,10 +28,11 @@ import OfferReviews from '~/offer/offer-reviews/offer-reviews';
 import { AppRoute, MapType, NEAR_PLACES_TO_SHOW } from '@/utils/consts';
 import { isRequestOK } from '@/utils/helpers';
 
+const MAX_PHOTOS = 6;
+
 function OfferPage(): JSX.Element {
   const { id } = useParams();
 
-  const { selectedPointId, handleSelectedPointState } = useSelectedPoint(id);
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getOffer);
   const nearPlaces = useAppSelector(getNearPlaces).slice(
@@ -40,7 +41,7 @@ function OfferPage(): JSX.Element {
   );
   const reviews = useAppSelector(getReviews);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, disableLoading } = useLoading();
 
   const getOfferInfo = useCallback(
     async (offerId: string) => {
@@ -52,11 +53,15 @@ function OfferPage(): JSX.Element {
           dispatch(fetchOfferComments(offerId)),
         ]);
 
-        setIsLoading(false);
+        disableLoading();
       }
     },
     [dispatch]
   );
+
+  const handleOfferUpdate = async () => await dispatch(getOfferByID(id!));
+
+  const handleNearbyOffersUpdate = async () => await dispatch(fetchNearbyOffers(id!));
 
   useEffect(() => {
     if (id) {
@@ -82,11 +87,14 @@ function OfferPage(): JSX.Element {
 
           <main className="page__main page__main--offer">
             <section className="offer">
-              <OfferGallery photoUrls={offer!.images} />
+              <OfferGallery photoUrls={offer!.images.slice(0, MAX_PHOTOS)} />
 
               <div className="offer__container container">
                 <div className="offer__wrapper">
-                  <OfferDescription offer={offer!} />
+                  <OfferDescription
+                    offer={offer!}
+                    onUpdateInfo={handleOfferUpdate}
+                  />
 
                   <OfferHost host={offer!.host} />
 
@@ -101,15 +109,16 @@ function OfferPage(): JSX.Element {
               <MapSection
                 type={MapType.Offer}
                 offers={nearPlaces}
-                selectedOfferId={selectedPointId}
+                selectedOfferId={id!}
+                currentOffer={offer!}
               />
             </section>
 
             <div className="container">
               <OfferNearPlaces
                 places={nearPlaces}
-                onMouseOver={handleSelectedPointState}
-                onMouseLeave={handleSelectedPointState}
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                onUpdateInfo={handleNearbyOffersUpdate}
               />
             </div>
           </main>

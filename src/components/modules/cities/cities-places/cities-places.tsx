@@ -7,6 +7,8 @@ import CitiesPlacesSorting from '~/cities/cities-places-sorting/cities-places-so
 import { ID } from '@/types/id';
 import { OfferCard } from '@/types/offer';
 
+const getEnding = (length: number) => length === 1 ? 'place' : 'places';
+
 type CitiesPlacesProps = Readonly<{
   places: OfferCard[];
   onMouseOver?: (id: ID) => void;
@@ -24,7 +26,7 @@ function CitiesPlaces({
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
-        {places.length} places to stay in {selectedCity}
+        {places.length} {getEnding(places.length)} to stay in {selectedCity}
       </b>
 
       <CitiesPlacesSorting />

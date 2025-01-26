@@ -28,7 +28,7 @@ function MainPage(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchOffersAction());
-  }, [dispatch]);
+  }, [dispatch, currentCity]);
 
   return (
     <div
@@ -58,24 +58,24 @@ function MainPage(): JSX.Element {
             )}
           >
             {hasPlaces ? (
-              <>
-                <CitiesPlaces
-                  places={places}
-                  onMouseOver={handleSelectedPointState}
-                  onMouseLeave={handleSelectedPointState}
-                />
-
-                <div className="cities__right-section">
-                  <MapSection
-                    type={MapType.Cities}
-                    offers={places}
-                    selectedOfferId={selectedPointId}
-                  />
-                </div>
-              </>
+              <CitiesPlaces
+                places={places}
+                onMouseOver={handleSelectedPointState}
+                onMouseLeave={handleSelectedPointState}
+              />
             ) : (
-              <CitiesPlacesEmpty />
+              <CitiesPlacesEmpty currentCity={currentCity} />
             )}
+
+            <div className="cities__right-section">
+              {hasPlaces && (
+                <MapSection
+                  type={MapType.Cities}
+                  offers={places}
+                  selectedOfferId={selectedPointId}
+                />
+              )}
+            </div>
           </div>
         </div>
       </main>

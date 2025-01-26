@@ -5,6 +5,7 @@ import { OfferCard } from '@/types/offer';
 import { AppDispatch, State } from '@/types/store';
 import { ApiRoute, FeatureModule } from '@/utils/consts';
 
+import { showError } from '@/utils/helpers';
 import { loadOffers } from './actions';
 
 const Action = {
@@ -20,9 +21,13 @@ const fetchOffersAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >(Action.fetchOffers, async (_arg, { dispatch, extra: api }) => {
-  const { data } = await api.get<OfferCard[]>(ApiRoute.OFFERS);
+  try {
+    const { data } = await api.get<OfferCard[]>(ApiRoute.OFFERS);
 
-  dispatch(loadOffers(data));
+    dispatch(loadOffers(data));
+  } catch (error) {
+    showError(error);
+  }
 });
 
 export { fetchOffersAction };

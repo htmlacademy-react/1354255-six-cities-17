@@ -6,6 +6,7 @@ import { AuthData } from '@/types/auth-data';
 import { AppDispatch, State } from '@/types/store';
 import { UserWithAuth } from '@/types/user';
 import { ApiRoute, AuthStatus, FeatureModule } from '@/utils/consts';
+import { showError } from '@/utils/helpers';
 
 import { requireAuthorization } from './actions';
 
@@ -29,7 +30,9 @@ const checkAuthAction = createAsyncThunk<
         authStatus: AuthStatus.Auth,
       })
     );
-  } catch {
+  } catch (error) {
+    showError(error);
+
     dispatch(
       requireAuthorization({
         userData: undefined,
@@ -46,20 +49,24 @@ const loginAction = createAsyncThunk<
 >(
   Action.login,
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const {
-      data: { token },
-    } = await api.post<UserWithAuth>(ApiRoute.LOGIN, { email, password });
+    try {
+      const {
+        data: { token },
+      } = await api.post<UserWithAuth>(ApiRoute.LOGIN, { email, password });
 
-    saveToken(token);
+      saveToken(token);
 
-    const { data } = await api.get<UserWithAuth>(ApiRoute.LOGIN);
+      const { data } = await api.get<UserWithAuth>(ApiRoute.LOGIN);
 
-    dispatch(
-      requireAuthorization({
-        userData: data,
-        authStatus: AuthStatus.Auth,
-      })
-    );
+      dispatch(
+        requireAuthorization({
+          userData: data,
+          authStatus: AuthStatus.Auth,
+        })
+      );
+    } catch (error) {
+      showError(error);
+    }
   }
 );
 
@@ -69,7 +76,9 @@ const logoutAction = createAsyncThunk<
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
 >(Action.logout, async (_arg, { dispatch, extra: api }) => {
   await api.delete(ApiRoute.LOGOUT);
+
   dropToken();
+
   dispatch(
     requireAuthorization({
       userData: undefined,

@@ -3,4 +3,7 @@ import { FeatureModule } from '@/utils/consts';
 
 const getFavorites = (state: State) => state[FeatureModule.CITIES].offerCards.filter((card) => card.isFavorite);
 
-export { getFavorites };
+const getAllFavorites = (state: State) =>
+  state[FeatureModule.FAVORITE].favorites;
+
+export { getAllFavorites, getFavorites };
