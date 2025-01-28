@@ -1,5 +1,5 @@
 import { OfferHousing } from '@/types/offer';
-import { capitalizeFirstLetter } from '@/utils/helpers';
+import { capitalizeFirstLetter, getEnding } from '@/utils/helpers';
 
 type OfferFeaturesProps = Readonly<{
   type: OfferHousing;
@@ -7,17 +7,21 @@ type OfferFeaturesProps = Readonly<{
   maxAdults: number;
 }>;
 
-function OfferFeatures({ type, bedroomsCount, maxAdults }: OfferFeaturesProps): JSX.Element {
+function OfferFeatures({
+  type,
+  bedroomsCount,
+  maxAdults,
+}: OfferFeaturesProps): JSX.Element {
   return (
     <ul className="offer__features">
       <li className="offer__feature offer__feature--entire">
         {capitalizeFirstLetter(type)}
       </li>
       <li className="offer__feature offer__feature--bedrooms">
-        {bedroomsCount} Bedrooms
+        {bedroomsCount} {getEnding('Bedroom', bedroomsCount)}
       </li>
       <li className="offer__feature offer__feature--adults">
-        Max {maxAdults} adults
+        Max {maxAdults} {getEnding('adult', maxAdults)}
       </li>
     </ul>
   );

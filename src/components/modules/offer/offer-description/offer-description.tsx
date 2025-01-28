@@ -19,7 +19,7 @@ type OfferDescriptionProps = Readonly<{
   onUpdateInfo: () => Promise<unknown>;
 }>;
 
-function OfferDescription({
+function Description({
   offer,
   onUpdateInfo,
 }: OfferDescriptionProps): JSX.Element {
@@ -59,4 +59,4 @@ function OfferDescription({
   );
 }
 
-export default memo(OfferDescription);
+export const OfferDescription = memo(Description);

@@ -3,10 +3,9 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { checkAuthAction } from '@/store/modules/auth/api-actions';
-import { getAuthStatus } from '@/store/modules/auth/selectors';
+import { useAppDispatch } from '@/hooks/store/use-app-dispatch';
+import { useAppSelector } from '@/hooks/store/use-app-selector';
+import { checkAuthAction, getAuthStatus } from '@/store/modules/auth';
 
 import AuthRouteGuard from '@/components/core/auth-route-guard/auth-route-guard';
 import FavoritesPage from '@/pages/favorites-page/favorites-page';

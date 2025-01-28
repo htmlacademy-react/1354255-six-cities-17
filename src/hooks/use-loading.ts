@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function useLoaing() {
+function useLoading() {
   const [isLoading, setIsLoading] = useState(true);
 
   const disableLoading = () => {
@@ -13,4 +13,4 @@ function useLoaing() {
   };
 }
 
-export default useLoaing;
+export default useLoading;

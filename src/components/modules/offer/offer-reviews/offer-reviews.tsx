@@ -1,5 +1,5 @@
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { getAuthStatus } from '@/store/modules/auth/selectors';
+import { useAppSelector } from '@/hooks/store/use-app-selector';
+import { getAuthStatus } from '@/store/modules/auth';
 
 import OfferReviewsForm from '~/offer/offer-reviews-form/offer-reviews-form';
 import OfferReviewsList from '~/offer/offer-reviews-list/offer-reviews-list';

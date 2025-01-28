@@ -2,26 +2,24 @@ import { useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
 
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import useLoading from '@/hooks/useLoading';
+import { useAppDispatch } from '@/hooks/store/use-app-dispatch';
+import { useAppSelector } from '@/hooks/store/use-app-selector';
+import useLoading from '@/hooks/use-loading';
 import {
   fetchNearbyOffers,
   fetchOfferComments,
-  getOfferByID,
-} from '@/store/modules/offer/api-actions';
-import {
   getNearPlaces,
   getOffer,
+  getOfferByID,
   getReviews,
-} from '@/store/modules/offer/selectors';
+} from '@/store/modules/offer';
 
-import Header from '@/components/common/header/header';
+import { Header } from '@/components/common/header/header';
 import Loader from '@/components/common/loader/loader';
 import MapSection from '@/components/common/map-section/map-section';
-import OfferDescription from '~/offer/offer-description/offer-description';
-import OfferGallery from '~/offer/offer-gallery/offer-gallery';
-import OfferHost from '~/offer/offer-host/offer-host';
+import { OfferDescription } from '~/offer/offer-description/offer-description';
+import { OfferGallery } from '~/offer/offer-gallery/offer-gallery';
+import { OfferHost } from '~/offer/offer-host/offer-host';
 import OfferNearPlaces from '~/offer/offer-near-places/offer-near-places';
 import OfferReviews from '~/offer/offer-reviews/offer-reviews';
 
@@ -56,12 +54,13 @@ function OfferPage(): JSX.Element {
         disableLoading();
       }
     },
-    [dispatch]
+    [dispatch, disableLoading]
   );
 
   const handleOfferUpdate = async () => await dispatch(getOfferByID(id!));
 
-  const handleNearbyOffersUpdate = async () => await dispatch(fetchNearbyOffers(id!));
+  const handleNearbyOffersUpdate = async () =>
+    await dispatch(fetchNearbyOffers(id!));
 
   useEffect(() => {
     if (id) {

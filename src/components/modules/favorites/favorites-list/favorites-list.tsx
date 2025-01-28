@@ -1,5 +1,5 @@
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import { fetchFavoriteOffersAction } from '@/store/modules/favorite/api-actions';
+import { useAppDispatch } from '@/hooks/store/use-app-dispatch';
+import { fetchFavoriteOffersAction } from '@/store/modules/favorite';
 
 import LocationItem from '@/components/common/location-item/location-item';
 import PlaceCard from '@/components/common/place-card/place-card';
@@ -25,7 +25,8 @@ function FavoritesList({ places }: FavoritesListProps): JSX.Element {
   );
   const dispatch = useAppDispatch();
 
-  const handleInfoUpdate = async () => await dispatch(fetchFavoriteOffersAction());
+  const handleInfoUpdate = async () =>
+    await dispatch(fetchFavoriteOffersAction());
 
   return (
     <section className="favorites">

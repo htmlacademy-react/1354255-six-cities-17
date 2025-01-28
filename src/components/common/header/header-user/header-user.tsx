@@ -1,9 +1,9 @@
 import { shallowEqual } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { getUser } from '@/store/modules/auth/selectors';
-import { getFavorites } from '@/store/modules/favorite/selectors';
+import { useAppSelector } from '@/hooks/store/use-app-selector';
+import { getUser } from '@/store/modules/auth';
+import { getFavorites } from '@/store/modules/favorite';
 
 import { ValueOf } from '@/types/helpers';
 import { AppRoute, AuthStatus } from '@/utils/consts';

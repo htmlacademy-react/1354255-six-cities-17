@@ -7,7 +7,7 @@ type OfferHostProps = Readonly<{
   host: User;
 }>;
 
-function OfferHost({ host }: OfferHostProps): JSX.Element {
+function Host({ host }: OfferHostProps): JSX.Element {
   const { isPro, name, avatarUrl } = host;
 
   return (
@@ -37,4 +37,4 @@ function OfferHost({ host }: OfferHostProps): JSX.Element {
   );
 }
 
-export default memo(OfferHost);
+export const OfferHost = memo(Host);

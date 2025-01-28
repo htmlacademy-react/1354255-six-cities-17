@@ -1,10 +1,9 @@
 import { clsx } from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { setCurrentSort } from '@/store/modules/cities/actions';
-import { getCurrentSort } from '@/store/modules/cities/selectors';
+import { useAppDispatch } from '@/hooks/store/use-app-dispatch';
+import { useAppSelector } from '@/hooks/store/use-app-selector';
+import { getCurrentSort, setCurrentSort } from '@/store/modules/cities';
 
 import { SortType } from '@/utils/consts';
 

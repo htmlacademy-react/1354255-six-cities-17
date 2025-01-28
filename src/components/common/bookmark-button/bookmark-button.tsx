@@ -1,10 +1,10 @@
 import { clsx } from 'clsx';
 import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { getAuthStatus } from '@/store/modules/auth/selectors';
-import { updateOfferFavoriteStatusAction } from '@/store/modules/favorite/api-actions';
+import { useAppDispatch } from '@/hooks/store/use-app-dispatch';
+import { useAppSelector } from '@/hooks/store/use-app-selector';
+import { getAuthStatus } from '@/store/modules/auth';
+import { updateOfferFavoriteStatusAction } from '@/store/modules/favorite';
 
 import { ValueOf } from '@/types/helpers';
 import { OfferCard, OfferFull } from '@/types/offer';
@@ -36,7 +36,9 @@ function BookmarkButton({
       navigate(AppRoute.Login);
     }
 
-    await dispatch(updateOfferFavoriteStatusAction({ offer, isFavorite: isActive }));
+    await dispatch(
+      updateOfferFavoriteStatusAction({ offer, isFavorite: isActive })
+    );
 
     if (onUpdateInfo) {
       await onUpdateInfo();
