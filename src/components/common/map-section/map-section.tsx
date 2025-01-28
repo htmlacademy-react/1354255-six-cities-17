@@ -1,8 +1,8 @@
 import { Icon, Marker, layerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
-import useMap from '@/hooks/useMap';
+import useMap from '@/hooks/use-map';
 import { ValueOf } from '@/types/helpers';
 import { ID } from '@/types/id';
 import { OfferCard, OfferFull } from '@/types/offer';
@@ -34,7 +34,10 @@ function MapSection({
   const mapRef = useRef(null);
   const map = useMap(mapRef, startCity);
 
-  const offerMarkers: Array<OfferCard | OfferFull> = [...offers];
+  const offerMarkers: Array<OfferCard | OfferFull> = useMemo(
+    () => [...offers],
+    [offers]
+  );
 
   if (currentOffer) {
     offerMarkers.push(currentOffer);
@@ -59,7 +62,7 @@ function MapSection({
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOfferId]);
+  }, [map, offerMarkers, selectedOfferId]);
 
   return <section className={`${type}__map map`} ref={mapRef}></section>;
 }

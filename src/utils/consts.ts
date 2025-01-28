@@ -46,14 +46,6 @@ const RatingType = {
   Offer: 'offer',
 } as const;
 
-const ApiEndpoint = {
-  OFFERS: 'offers',
-  FAVORITE: 'favorite',
-  COMMENTS: 'comments',
-  LOGIN: 'login',
-  LOGOUT: 'logout',
-} as const;
-
 const Leaflet = {
   URL_TEMPLATE:
     'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -99,7 +91,6 @@ const RequestStatus = {
 } as const;
 
 export {
-  ApiEndpoint,
   ApiRoute,
   AppRoute,
   AuthStatus,

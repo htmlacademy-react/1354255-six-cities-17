@@ -1,26 +1,30 @@
 import { clsx } from 'clsx';
 import { memo, MouseEvent } from 'react';
 
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { resetSort, setCurrentCity } from '@/store/modules/cities/actions';
-import { getCurrentCity } from '@/store/modules/cities/selectors';
+import { useAppDispatch } from '@/hooks/store/use-app-dispatch';
+import { useAppSelector } from '@/hooks/store/use-app-selector';
+import {
+  getCurrentCity,
+  resetSort,
+  setCurrentCity,
+} from '@/store/modules/cities';
 
 import LocationItem from '@/components/common/location-item/location-item';
 
 import { CityValue } from '@/types/city';
 import { City } from '@/utils/consts';
 
-function CitiesTabs(): JSX.Element {
+function Tabs(): JSX.Element {
   const dispatch = useAppDispatch();
   const selectedCity = useAppSelector(getCurrentCity);
 
-  const handleTabClick = (city: CityValue) => (evt: MouseEvent<HTMLElement>) => {
-    evt.preventDefault();
+  const handleTabClick =
+    (city: CityValue) => (evt: MouseEvent<HTMLElement>) => {
+      evt.preventDefault();
 
-    dispatch(setCurrentCity(city));
-    dispatch(resetSort());
-  };
+      dispatch(setCurrentCity(city));
+      dispatch(resetSort());
+    };
 
   return (
     <div className="tabs">
@@ -48,4 +52,4 @@ function CitiesTabs(): JSX.Element {
   );
 }
 
-export default memo(CitiesTabs);
+export const CitiesTabs = memo(Tabs);

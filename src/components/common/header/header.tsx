@@ -1,11 +1,11 @@
 import { memo } from 'react';
 
+import { useAppDispatch } from '@/hooks/store/use-app-dispatch';
+import { useAppSelector } from '@/hooks/store/use-app-selector';
+import { getAuthStatus, logoutAction } from '@/store/modules/auth';
+
 import HeaderUser from '@/components/common/header/header-user/header-user';
 import Logo from '@/components/common/logo/logo';
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { logoutAction } from '@/store/modules/auth/api-actions';
-import { getAuthStatus } from '@/store/modules/auth/selectors';
 
 import { AuthStatus } from '@/utils/consts';
 
@@ -19,7 +19,7 @@ type HeaderProps = Readonly<{
   isLogin?: boolean;
 }>;
 
-function Header({ isLogin = false }: HeaderProps): JSX.Element {
+function HeaderComponent({ isLogin = false }: HeaderProps): JSX.Element {
   const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
 
@@ -59,4 +59,4 @@ function Header({ isLogin = false }: HeaderProps): JSX.Element {
   );
 }
 
-export default memo(Header);
+export const Header = memo(HeaderComponent);

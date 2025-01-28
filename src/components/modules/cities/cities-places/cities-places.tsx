@@ -1,13 +1,12 @@
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { getCurrentCity } from '@/store/modules/cities/selectors';
+import { useAppSelector } from '@/hooks/store/use-app-selector';
+import { getCurrentCity } from '@/store/modules/cities';
 
 import CitiesPlacesList from '~/cities/cities-places-list/cities-places-list';
 import CitiesPlacesSorting from '~/cities/cities-places-sorting/cities-places-sorting';
 
 import { ID } from '@/types/id';
 import { OfferCard } from '@/types/offer';
-
-const getEnding = (length: number) => length === 1 ? 'place' : 'places';
+import { getEnding } from '@/utils/helpers';
 
 type CitiesPlacesProps = Readonly<{
   places: OfferCard[];
@@ -26,7 +25,8 @@ function CitiesPlaces({
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
-        {places.length} {getEnding(places.length)} to stay in {selectedCity}
+        {places.length} {getEnding('place', places.length)} to stay in{' '}
+        {selectedCity}
       </b>
 
       <CitiesPlacesSorting />

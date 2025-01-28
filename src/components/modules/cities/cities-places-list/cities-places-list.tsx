@@ -1,7 +1,6 @@
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import { useAppSelector } from '@/hooks/store/useAppSelector';
-import { fetchOffersAction } from '@/store/modules/cities/api-actions';
-import { getCurrentSort } from '@/store/modules/cities/selectors';
+import { useAppDispatch } from '@/hooks/store/use-app-dispatch';
+import { useAppSelector } from '@/hooks/store/use-app-selector';
+import { fetchOffersAction, getCurrentSort } from '@/store/modules/cities';
 
 import PlaceCard from '@/components/common/place-card/place-card';
 

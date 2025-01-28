@@ -1,11 +1,8 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import {
-  fetchOfferComments,
-  postOfferComments,
-} from '@/store/modules/offer/api-actions';
+import { useAppDispatch } from '@/hooks/store/use-app-dispatch';
+import { fetchOfferComments, postOfferComments } from '@/store/modules/offer';
 
 import { MIN_CHARACTERS_IN_REVIEW } from '@/utils/consts';
 import { isRequestOK } from '@/utils/helpers';

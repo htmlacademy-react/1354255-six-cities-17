@@ -1,7 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-import { useAppDispatch } from '@/hooks/store/useAppDispatch';
-import { loginAction } from '@/store/modules/auth/api-actions';
+import { useAppDispatch } from '@/hooks/store/use-app-dispatch';
+import { loginAction } from '@/store/modules/auth';
+
 import { isPasswordValid } from '@/utils/validators';
 
 type Form = {

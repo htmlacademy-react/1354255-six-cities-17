@@ -1,9 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { authSlice } from '@/store/modules/auth/slice';
-import { citiesSlice } from '@/store/modules/cities/slice';
-import { favoriteSlice } from '@/store/modules/favorite/slice';
-import { offerSlice } from '@/store/modules/offer/slice';
+import { authSlice } from '@/store/modules/auth';
+import { citiesSlice } from '@/store/modules/cities';
+import { favoriteSlice } from '@/store/modules/favorite';
+import { offerSlice } from '@/store/modules/offer';
+
 import { FeatureModule } from '@/utils/consts';
 
 const reducer = combineReducers({

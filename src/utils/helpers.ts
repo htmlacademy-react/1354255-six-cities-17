@@ -56,12 +56,16 @@ const showError = (error: unknown) => {
   }
 };
 
+const getEnding = (wordInOne: string, amount: number) =>
+  amount === 1 ? wordInOne : `${wordInOne}s`;
+
 export {
   capitalizeFirstLetter,
   convertRatingToStyle,
+  getEnding,
   humanizeDate,
   isRequestOK,
   showError,
   sortComments,
-  sortOffers,
+  sortOffers
 };
